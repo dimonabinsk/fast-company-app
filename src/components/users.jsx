@@ -10,9 +10,9 @@ const Users = () => {
   };
 
   const changeStr = (count) => {
-    const arrMen = ["человек тусанёт", "человека тусанут"];
-    const strMen = `${declinationOfTheString(count, arrMen)}`;
-    return strMen;
+    const arrMan = ["человек тусанёт", "человека тусанут"];
+    const strMan = `${declinationOfTheString(count, arrMan)}`;
+    return strMan;
   };
 
   return (
