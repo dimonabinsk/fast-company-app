@@ -5,28 +5,30 @@ import { declinationOfTheString } from "../utility/declination";
 const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
-  const handlerRowChange = (item) => {
-    setUsers((prevState) => prevState.filter((row) => row !== item));
+  const handlerRowChange = (userId) => {
+    setUsers(users.filter((user) => user._id !== userId));
   };
 
-  const changeStr = () => {
-    const arrMen = ["человек", "человека", "человек"];
-    const count = users.length;
-    const strMen = `${declinationOfTheString(
-      count,
-      arrMen
-    )} с тобой сегодня тусанёт`;
-
+  const changeStr = (count) => {
+    const arrMen = ["человек тусанёт", "человека тусанут", "человек тусанёт"];
+    const strMen = `${declinationOfTheString(count, arrMen)}`;
     return strMen;
   };
 
-  const renderTable = () => {
-    return (
-      <>
-        <span className="badge bg-primary px-3 py-2 m-2">
-          {users.length}
-          <span className="mx-2">{changeStr()}</span>
+  return (
+    <>
+      <h2>
+        <span
+          className={`badge ${
+            users.length > 0 ? "bg-primary" : "bg-danger"
+          } mx-2`}
+        >
+          {users.length > 0
+            ? `${users.length} ${changeStr(users.length)} с тобой сегодня`
+            : "Никто с тобой не тусанёт"}
         </span>
+      </h2>
+      {users.length > 0 && (
         <table className="table table-light">
           <thead>
             <tr>
@@ -58,7 +60,7 @@ const Users = () => {
                 <td>
                   <button
                     className="btn btn-danger p-1"
-                    onClick={() => handlerRowChange(user)}
+                    onClick={() => handlerRowChange(user._id)}
                   >
                     Удалить
                   </button>
@@ -67,18 +69,8 @@ const Users = () => {
             ))}
           </tbody>
         </table>
-      </>
-    );
-  };
-
-  if (users.length !== 0) {
-    return <>{renderTable()}</>;
-  }
-
-  return (
-    <span className="badge bg-danger px-3 py-2 m-2">
-      Никто с тобой не тусанёт
-    </span>
+      )}
+    </>
   );
 };
 
