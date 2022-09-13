@@ -1,4 +1,4 @@
-export const declinationOfTheString = function (num, word) {
+const declinationOfTheString = function (num, word) {
   if (word.length !== 2 && word.length !== 3) {
     throw new Error("Введён НЕ корректный массив");
   } else {
@@ -15,4 +15,10 @@ export const declinationOfTheString = function (num, word) {
       ];
     }
   }
+};
+
+export const changeStr = (count) => {
+  const arrMan = ["человек тусанёт", "человека тусанут"];
+  const strMan = `${declinationOfTheString(count, arrMan)}`;
+  return strMan;
 };

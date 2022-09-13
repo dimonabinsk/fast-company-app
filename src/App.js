@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import Users from "./components/users";
+import Users from "./components/Users";
 
 function App() {
   return (
