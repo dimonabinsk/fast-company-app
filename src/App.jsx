@@ -1,9 +1,10 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import API from "../api";
-import SearchStatus from "./SearchStatus.component";
-import User from "./User.component";
+import API from "./api";
+import SearchStatus from "./components/SearchStatus.component";
+import Users from "./components/Users";
 
-const Users = () => {
+function App() {
   const initialStateUsers = API.users.fetchAll();
   const [users, setUsers] = useState(initialStateUsers);
 
@@ -11,12 +12,11 @@ const Users = () => {
     setUsers(users.filter((user) => user._id !== userId));
   };
 
-  const handlerBookmark = (userId) => {
+  const handlerToggleBookmark = (userId) => {
     const newUsers = users.map((user) => {
       if (userId === user._id) {
-        user.bookmark = !user.bookmark;
+        return { ...user, bookmark: !user.bookmark };
       }
-
       return user;
     });
 
@@ -24,15 +24,15 @@ const Users = () => {
   };
 
   return (
-    <>
+    <div className=" m-3">
       <SearchStatus length={users.length} />
-      <User
+      <Users
         users={users}
         onHandlerRowChange={handlerRowChange}
-        onHandlerBookmark={handlerBookmark}
+        onHandlerBookmark={handlerToggleBookmark}
       />
-    </>
+    </div>
   );
-};
+}
 
-export default Users;
+export default App;

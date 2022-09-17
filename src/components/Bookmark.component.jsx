@@ -1,5 +1,4 @@
-const Bookmark = (props) => {
-  const { id, onHandler, mark } = props;
+const Bookmark = ({ id, onHandler, mark }) => {
   return (
     <>
       <button className="btn btn-sm" onClick={() => onHandler(id)}>

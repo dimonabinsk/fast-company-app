@@ -1,12 +1,7 @@
-const Characteristic = (props) => {
-const {characteristics} = props;
+const Characteristic = ({ color, name }) => {
   return (
     <>
-      {characteristics.map((quality) => (
-        <span key={quality._id} className={`badge  bg-${quality.color} me-1`}>
-          {quality.name}
-        </span>
-      ))}
+      <span className={`badge  bg-${color} me-1`}>{name}</span>
     </>
   );
 };

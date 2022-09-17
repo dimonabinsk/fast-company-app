@@ -22,3 +22,13 @@ export const changeStr = (count) => {
   const strMan = `${declinationOfTheString(count, arrMan)}`;
   return strMan;
 };
+
+export const renderPhrase = (number) => {
+  const lastOne = Number(number.toString().slice(-1));
+  if (number > 4 && number < 15) {
+      return "человек тусанёт";
+  }
+  if (lastOne === 1) return "человек тусанёт";
+  if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
+  return "человек тусанёт";
+};
