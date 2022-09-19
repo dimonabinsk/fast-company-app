@@ -13,7 +13,7 @@ const Users = ({ users, ...rest }) => {
     // console.log(pageIndex);
   };
 
-  console.log(currentPage)
+  // console.log(currentPage);
 
   const pageEpisodes = paginate(users, currentPage, pageSize);
   // console.log(pageEpisodes);
@@ -40,11 +40,11 @@ const Users = ({ users, ...rest }) => {
           </tbody>
         </table>
       )}
-      <Pagination 
-      itemsCount={count} 
-      pageSize={pageSize}
-      currentPage={currentPage}
-      onPageChange={handlerPageChange}
+      <Pagination
+        itemsCount={count}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlerPageChange}
       />
     </>
   );
