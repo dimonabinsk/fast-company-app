@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
 import API from "./api";
 import SearchStatus from "./components/SearchStatus.component";
-import Users from "./components/Users";
+import Users from "./components/Users.component";
 
 function App() {
   const initialStateUsers = API.users.fetchAll();
