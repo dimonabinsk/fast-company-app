@@ -18,8 +18,8 @@ const User = (props) => {
     <tr key={_id}>
       <th scope="row">{name}</th>
       <td>
-        {qualities.map((quality)=>(
-            <Characteristic key={quality._id} {...quality}/>
+        {qualities.map((quality) => (
+          <Characteristic key={quality._id} {...quality} />
         ))}
       </td>
       <td>{profession.name}</td>
