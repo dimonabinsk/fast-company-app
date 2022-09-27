@@ -61,7 +61,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                     </div>
                 )
                 : (
-                    <div>Загрузка данных...</div>
+                    <span>Загрузка данных...</span>
                 )}
             <div className="d-flex flex-column p-3">
                 <SearchStatus length={count} />
