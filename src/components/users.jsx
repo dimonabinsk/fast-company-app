@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import API from "../api";
-import Pagination from "./Pagination.component";
-import UsersTable from "./UsersTable.component";
+import Pagination from "./pagination";
+import UsersTable from "./usersTable";
 import { paginate } from "../utility/pagination";
-import SearchStatus from "./SearchStatus.component";
-import GroupList from "./GroupList.component";
+import SearchStatus from "./searchStatus";
+import GroupList from "./groupList";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const pageSize = 4;
@@ -75,7 +75,7 @@ const Users = ({ users: allUsers, ...rest }) => {
                     <UsersTable
                         users={pageEpisodes}
                         onSort={handlerSort}
-                        currentSort={sortBy}
+                        selectedSort={sortBy}
                         {...rest}/>
                 )}
                 <div className="d-flex justify-content-center">
