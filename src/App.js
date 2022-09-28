@@ -35,8 +35,9 @@ function App() {
                         onHandlerBookmark={handlerToggleBookmark}
                     />
                 )
-                : (<div>Загрузка данных...</div>)
-            }
+                : (
+                    <div>Загрузка данных...</div>
+                )}
         </div>
     );
 }

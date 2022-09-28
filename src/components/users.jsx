@@ -36,7 +36,10 @@ const Users = ({ users: allUsers, ...rest }) => {
 
     const filteredUsers = selectedProf
         ? allUsers.filter((user) => {
-            return JSON.stringify(user.profession) === JSON.stringify(selectedProf);
+            return (
+                JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+            );
         })
         : allUsers;
 
@@ -76,7 +79,8 @@ const Users = ({ users: allUsers, ...rest }) => {
                         users={pageEpisodes}
                         onSort={handlerSort}
                         selectedSort={sortBy}
-                        {...rest}/>
+                        {...rest}
+                    />
                 )}
                 <div className="d-flex justify-content-center">
                     <Pagination

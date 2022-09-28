@@ -26,12 +26,10 @@ const GroupList = ({
     return (
         <ul className="list-group">
             {Array.isArray(items)
-                ? items.map((item) => (
-                    renderListItems(item)
-                ))
-                : Object.keys(items).map((item) => (
+                ? items.map((item) => renderListItems(item))
+                : Object.keys(items).map((item) =>
                     renderListItems(items[item])
-                ))}
+                )}
         </ul>
     );
 };

@@ -32,7 +32,7 @@ const UsersTable = ({ users, onSort, selectedSort, ...rest }) => {
     };
     return (
         <table className="table table-light text-center">
-            <TableHeader {...{ onSort, selectedSort, columns }}/>
+            <TableHeader {...{ onSort, selectedSort, columns }} />
             <tbody>
                 {users.map((user) => (
                     <User key={user._id} {...user} {...rest} />
