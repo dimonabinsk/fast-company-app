@@ -1,26 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Bookmark = ({ id, onHandler, mark }) => {
+const Bookmark = ({ status, ...rest }) => {
     return (
         <>
-            <button className="btn btn-sm" onClick={() => onHandler(id)}>
-                {mark
-                    ? (
-                        <i className="bi bi-emoji-heart-eyes-fill fs-2 text-primary"></i>
-                    )
-                    : (
-                        <i className="bi bi-emoji-heart-eyes fs-2"></i>
-                    )}
+            <button className="btn btn-sm" {...rest}>
+                <i className={`bi bi-emoji-heart-eyes${status ? "-fill text-primary" : ""} fs-2 `}></i>
             </button>
         </>
     );
 };
 
 Bookmark.propTypes = {
-    id: PropTypes.string.isRequired,
-    onHandler: PropTypes.func.isRequired,
-    mark: PropTypes.bool.isRequired
+    status: PropTypes.bool.isRequired
 };
 
 export default Bookmark;
