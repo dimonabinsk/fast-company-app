@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import API from "../api";
-import Pagination from "./Pagination.component";
-import User from "./User.component";
+import API from "../../api";
+import Pagination from "./pagination";
+import User from "./user";
 import { paginate } from "../utility/pagination";
-import SearchStatus from "./SearchStatus.component";
-import GroupList from "./GroupList.component";
+import SearchStatus from "./searchStatus";
+import GroupList from "./groupList";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const pageSize = 2;

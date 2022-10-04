@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Characteristic from "./Characteristic.component";
-import Bookmark from "./Bookmark.component";
+import Characteristic from "./characteristic";
+import Bookmark from "./bookmark";
 
 const User = (props) => {
     const {

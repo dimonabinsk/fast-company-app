@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
-import Users from "./components/Users.component";
-import API from "./api";
+import Users from "./components/users";
+import API from "../api";
 
 function App() {
     const [users, setUsers] = useState();

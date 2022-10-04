@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import { changeStr } from "../utility/declination";
 
 const SearchStatus = ({ length }) => {
