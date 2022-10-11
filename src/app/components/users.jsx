@@ -57,11 +57,11 @@ const Users = () => {
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter((user) => {
-                return (
-                    JSON.stringify(user.profession) ===
+                  return (
+                      JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
-                );
-            })
+                  );
+              })
             : users;
 
         const count = filteredUsers.length;

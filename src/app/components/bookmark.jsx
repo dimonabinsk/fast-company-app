@@ -5,7 +5,11 @@ const Bookmark = ({ status, ...rest }) => {
     return (
         <>
             <button className="btn btn-sm" {...rest}>
-                <i className={`bi bi-emoji-heart-eyes${status ? "-fill text-primary" : ""} fs-2 `}></i>
+                <i
+                    className={`bi bi-emoji-heart-eyes${
+                        status ? "-fill text-primary" : ""
+                    } fs-2 `}
+                ></i>
             </button>
         </>
     );

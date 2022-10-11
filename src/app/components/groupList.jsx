@@ -28,8 +28,8 @@ const GroupList = ({
             {Array.isArray(items)
                 ? items.map((item) => renderListItems(item))
                 : Object.keys(items).map((item) =>
-                    renderListItems(items[item])
-                )}
+                      renderListItems(items[item])
+                  )}
         </ul>
     );
 };
