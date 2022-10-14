@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
-import API from "../../api";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+
+import API from "../../api";
 import SpinnerLoading from "./spinnerLoading";
 import CharacteristicList from "./characteristicList";
 import Rate from "./rate";
-import { Link } from "react-router-dom";
 
 const User = ({ id }) => {
+    const history = useHistory();
     const [user, setUser] = useState();
 
     useEffect(() => {
         API.users.getById(id).then((data) => setUser(data));
     }, []);
+
+    const handlerClickBtn = () => {
+        history.push("/users");
+    };
 
     // console.log(user);
     return user ? (
@@ -26,9 +32,9 @@ const User = ({ id }) => {
             </span>
             <span className="h4">Реитинг: {<Rate rate={user.rate} />}</span>
             <div className=" mt-2">
-                <Link to="/users" role="button" className=" btn btn-primary">
+                <button onClick={handlerClickBtn} className="btn btn-primary">
                     Все пользователи
-                </Link>
+                </button>
             </div>
         </>
     ) : (
@@ -37,7 +43,7 @@ const User = ({ id }) => {
 };
 
 User.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string.isRequired
 };
 
 export default User;
