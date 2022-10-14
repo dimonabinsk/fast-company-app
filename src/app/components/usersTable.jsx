@@ -6,6 +6,7 @@ import Table from "./table";
 import Bookmark from "./bookmark";
 import CharacteristicList from "./characteristicList";
 import Rate from "./rate";
+import { Link } from "react-router-dom";
 
 const UsersTable = ({
     users,
@@ -17,7 +18,15 @@ const UsersTable = ({
     const columns = {
         name: {
             path: "name",
-            name: "Имя"
+            name: "Имя",
+            component: (user) => (
+                <Link
+                    to={`/users/${user._id}`}
+                    className="nav-link link-secondary"
+                >
+                    {user.name}
+                </Link>
+            )
         },
         qualities: {
             name: "Качества",
