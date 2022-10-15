@@ -7,7 +7,7 @@ import SpinnerLoading from "./spinnerLoading";
 import CharacteristicList from "./characteristicList";
 import Rate from "./rate";
 
-const User = ({ id }) => {
+const UserSingle = ({ id }) => {
     const history = useHistory();
     const [user, setUser] = useState();
 
@@ -24,7 +24,7 @@ const User = ({ id }) => {
         <>
             <span className="h1">{user.name}</span>
             <span className="h2 d-block">
-                {`Профессия: ${user.profession.name}`}{" "}
+                {`Профессия: ${user.profession.name.toUpperCase()}`}{" "}
             </span>
             <CharacteristicList qualities={user.qualities} />
             <span className="h4 d-block">
@@ -42,8 +42,8 @@ const User = ({ id }) => {
     );
 };
 
-User.propTypes = {
+UserSingle.propTypes = {
     id: PropTypes.string.isRequired
 };
 
-export default User;
+export default UserSingle;

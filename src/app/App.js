@@ -3,15 +3,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import Header from "./components/header";
-import Main from "./layout/main";
-import Login from "./layout/login";
-import UsersLayout from "./layout/users.layout";
+import NavBar from "./components/navBar";
+import Main from "./pages/main";
+import Login from "./pages/login";
+import UsersLayout from "./pages/users";
 
 function App() {
     return (
         <>
-            <Header />
+            <NavBar />
             <Switch>
                 <Route exact path="/" component={Main} />
                 <Route path="/login" component={Login} />

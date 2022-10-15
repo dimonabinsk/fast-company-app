@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import User from "../components/user";
-import Users from "../components/users";
+import UserSingle from "../components/userSingle";
+import UsersMain from "../components/usersMain";
 
 const UsersLayout = () => {
     const { userId } = useParams();
-    return userId ? <User id={userId} /> : <Users />;
+    return userId ? <UserSingle id={userId} /> : <UsersMain />;
 };
 
 export default UsersLayout;

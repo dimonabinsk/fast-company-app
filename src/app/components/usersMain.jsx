@@ -8,7 +8,7 @@ import SearchStatus from "./searchStatus";
 import GroupList from "./groupList";
 import SpinnerLoading from "./spinnerLoading";
 
-const Users = () => {
+const UsersMain = () => {
     const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [profession, setProfession] = useState();
@@ -120,4 +120,4 @@ const Users = () => {
     return <SpinnerLoading />;
 };
 
-export default Users;
+export default UsersMain;

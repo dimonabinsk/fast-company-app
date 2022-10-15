@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 // import PropTypes from "prop-types";
 
-const Header = () => {
+const NavBar = () => {
     const { pathname } = useLocation();
 
     const pathLink = [
@@ -49,4 +49,4 @@ const Header = () => {
 
 // Header.propTypes = {};
 
-export default Header;
+export default NavBar;
