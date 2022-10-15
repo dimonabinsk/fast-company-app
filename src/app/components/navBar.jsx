@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 const NavBar = () => {
     const { pathname } = useLocation();
 
-    const pathLink = [
+    const linkList = [
         {
             id: 1,
             path: "/",
@@ -28,7 +28,7 @@ const NavBar = () => {
             <nav className="navbar navbar-expand-lg bg-light">
                 <div className="container-fluid">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        {pathLink.map(({ id, path, name }) => (
+                        {linkList.map(({ id, path, name }) => (
                             <li className="nav-item" key={id}>
                                 <Link
                                     className={`nav-link ${
