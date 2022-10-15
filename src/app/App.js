@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import NavBar from "./components/navBar";
 import Main from "./pages/main";
 import Login from "./pages/login";
-import UsersLayout from "./pages/users";
+import Users from "./pages/users";
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={Main} />
                 <Route path="/login" component={Login} />
-                <Route path="/users/:userId?" component={UsersLayout} />
+                <Route path="/users/:userId?" component={Users} />
                 <Redirect to="/" />
             </Switch>
         </>
