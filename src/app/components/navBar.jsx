@@ -1,11 +1,9 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // import PropTypes from "prop-types";
 
 const NavBar = () => {
-    const { pathname } = useLocation();
-
     const linkList = [
         {
             id: 1,
@@ -28,16 +26,25 @@ const NavBar = () => {
             <nav className="navbar navbar-expand-lg bg-light">
                 <div className="container-fluid">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        {linkList.map(({ id, path, name }) => (
+                        {linkList.map(({ id, path, name }, i) => (
                             <li className="nav-item" key={id}>
-                                <Link
-                                    className={`nav-link ${
-                                        pathname === path ? "active" : ""
-                                    }`}
-                                    to={path}
-                                >
-                                    {name}
-                                </Link>
+                                {i === 0 ? (
+                                    <NavLink
+                                        exact
+                                        to={path}
+                                        className="nav-link"
+                                    >
+                                        {name}
+                                    </NavLink>
+                                ) : (
+                                    <NavLink
+                                        strict
+                                        to={path}
+                                        className="nav-link"
+                                    >
+                                        {name}
+                                    </NavLink>
+                                )}
                             </li>
                         ))}
                     </ul>
