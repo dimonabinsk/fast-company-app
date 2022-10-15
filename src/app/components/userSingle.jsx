@@ -22,19 +22,24 @@ const UserSingle = ({ id }) => {
     // console.log(user);
     return user ? (
         <>
-            <span className="h1">{user.name}</span>
-            <span className="h2 d-block">
-                {`Профессия: ${user.profession.name.toUpperCase()}`}{" "}
-            </span>
-            <CharacteristicList qualities={user.qualities} />
-            <span className="h4 d-block">
-                Количество встреч: {user.completedMeetings}
-            </span>
-            <span className="h4">Реитинг: {<Rate rate={user.rate} />}</span>
-            <div className=" mt-2">
-                <button onClick={handlerClickBtn} className="btn btn-primary">
-                    Все пользователи
-                </button>
+            <div className=" card text-center">
+                <span className="h1 card-header">{user.name}</span>
+                <span className="h2 d-block">
+                    {`Профессия: ${user.profession.name.toUpperCase()}`}{" "}
+                </span>
+                <CharacteristicList qualities={user.qualities} />
+                <span className="h4 d-block">
+                    Количество встреч: {user.completedMeetings}
+                </span>
+                <span className="h4">Реитинг: {<Rate rate={user.rate} />}</span>
+                <div className=" py-3 card-footer">
+                    <button
+                        onClick={handlerClickBtn}
+                        className="btn btn-primary"
+                    >
+                        Все пользователи
+                    </button>
+                </div>
             </div>
         </>
     ) : (

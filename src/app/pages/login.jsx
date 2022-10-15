@@ -4,7 +4,7 @@ import React from "react";
 const Login = () => {
     return (
         <>
-            <h1>Авторизация</h1>
+            <h1 className="text-center">Авторизация</h1>
         </>
     );
 };
