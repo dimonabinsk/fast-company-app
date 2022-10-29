@@ -10,14 +10,19 @@ const Table = ({ onSort, selectedSort, columns, data, children }) => {
         }
     };
     return (
-        <table className="table table-light text-center" style={styles.table}>
-            {children || (
-                <>
-                    <TableHeader {...{ onSort, selectedSort, columns }} />
-                    <TableBody {...{ data, columns }} />
-                </>
-            )}
-        </table>
+        <div className=" mb-5 rounded-3 overflow-hidden shadow">
+            <table
+                className="table table-light text-center mb-0"
+                style={styles.table}
+            >
+                {children || (
+                    <>
+                        <TableHeader {...{ onSort, selectedSort, columns }} />
+                        <TableBody {...{ data, columns }} />
+                    </>
+                )}
+            </table>
+        </div>
     );
 };
 

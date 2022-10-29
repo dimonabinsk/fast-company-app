@@ -8,6 +8,7 @@ import { paginate } from "../utility/pagination";
 import SearchStatus from "./searchStatus";
 import GroupList from "./groupList";
 import SpinnerLoading from "./spinnerLoading";
+import SearchQuery from "./searchQuery";
 
 const UsersMain = () => {
     const pageSize = 4;
@@ -16,6 +17,7 @@ const UsersMain = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
+    const [isSearch, setSearch] = useState("");
 
     useEffect(() => {
         API.users.fetchAll().then((data) => setUsers(data));
@@ -31,7 +33,7 @@ const UsersMain = () => {
         setUsers(newUsers);
     };
 
-    const handlerDelete = (userId) => {
+    const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
 
@@ -41,22 +43,35 @@ const UsersMain = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, setSearch]);
 
-    const handlerProfessionalSelect = (item) => {
+    const handleProfessionalSelect = (item) => {
         setSelectedProf(item);
+        setSearch("");
     };
 
-    const handlerPageChange = (pageIndex) => {
+    const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
 
-    const handlerSort = (item) => {
+    const handleSort = (item) => {
         setSortBy(item);
     };
 
+    const handleSearch = ({ target }) => {
+        setCurrentPage(1);
+        setSelectedProf(undefined);
+        setSearch(target.value);
+    };
+
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = isSearch
+            ? users.filter((user) => {
+                  const name = user.name.toLowerCase();
+                  const search = isSearch.toLowerCase();
+                  return name.indexOf(search) !== -1;
+              })
+            : selectedProf
             ? users.filter((user) => {
                   return (
                       JSON.stringify(user.profession) ===
@@ -74,7 +89,8 @@ const UsersMain = () => {
         const pageEpisodes = paginate(sortedUsers, currentPage, pageSize);
 
         const clearFilter = () => {
-            setSelectedProf();
+            setSelectedProf(undefined);
+            setSearch("");
         };
 
         return (
@@ -84,7 +100,7 @@ const UsersMain = () => {
                         <GroupList
                             items={profession}
                             selectedItem={selectedProf}
-                            onItemSelect={handlerProfessionalSelect}
+                            onItemSelect={handleProfessionalSelect}
                         />
                         <button
                             className="btn btn-secondary mt-2"
@@ -96,13 +112,14 @@ const UsersMain = () => {
                 )}
                 <div className="d-flex flex-column p-3">
                     <SearchStatus length={count} />
+                    <SearchQuery onSearch={handleSearch} value={isSearch} />
                     {count > 0 && (
                         <UsersTable
                             users={pageEpisodes}
-                            onSort={handlerSort}
+                            onSort={handleSort}
                             selectedSort={sortBy}
                             onToggleBookMark={handlerToggleBookMark}
-                            onDelete={handlerDelete}
+                            onDelete={handleDelete}
                         />
                     )}
                     <div className="d-flex justify-content-center">
@@ -110,7 +127,7 @@ const UsersMain = () => {
                             itemsCount={count}
                             pageSize={pageSize}
                             currentPage={currentPage}
-                            onPageChange={handlerPageChange}
+                            onPageChange={handlePageChange}
                         />
                     </div>
                 </div>

@@ -70,10 +70,10 @@ const UsersTable = ({
         }
     };
     return (
-        <Table>
-            <TableHeader {...{ onSort, selectedSort, columns }} />
-            <TableBody {...{ data: users, columns }} />
-        </Table>
+            <Table>
+                <TableHeader {...{ onSort, selectedSort, columns }} />
+                <TableBody {...{ data: users, columns }} />
+            </Table>
     );
 };
 
