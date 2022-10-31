@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import Table from "./table";
-import Bookmark from "./bookmark";
-import CharacteristicList from "./characteristicList";
-import Rate from "./rate";
+import Table, { TableBody, TableHeader } from "../common/table";
+import Bookmark from "../common/bookmark";
+import Qualities from "./qualities";
+import Rate from "../common/rate";
 
 const UsersTable = ({
     users,
@@ -32,7 +30,7 @@ const UsersTable = ({
         qualities: {
             name: "Качества",
             component: (user) => (
-                <CharacteristicList qualities={user.qualities} />
+                <Qualities qualities={user.qualities} />
             )
         },
         professions: {
@@ -70,10 +68,10 @@ const UsersTable = ({
         }
     };
     return (
-            <Table>
-                <TableHeader {...{ onSort, selectedSort, columns }} />
-                <TableBody {...{ data: users, columns }} />
-            </Table>
+        <Table>
+            <TableHeader {...{ onSort, selectedSort, columns }} />
+            <TableBody {...{ data: users, columns }} />
+        </Table>
     );
 };
 

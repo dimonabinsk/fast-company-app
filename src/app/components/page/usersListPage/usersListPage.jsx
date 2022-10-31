@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 
-import API from "../../api";
-import Pagination from "./pagination";
-import UsersTable from "./usersTable";
-import { paginate } from "../utility/pagination";
-import SearchStatus from "./searchStatus";
-import GroupList from "./groupList";
-import SpinnerLoading from "./spinnerLoading";
-import SearchQuery from "./searchQuery";
+import API from "../../../../api";
+import Pagination from "../../common/pagination";
+import UsersTable from "../../ui/usersTable";
+import { paginate } from "../../../utility/pagination";
+import SearchStatus from "../../ui/searchStatus";
+import GroupList from "../../common/groupList";
+import SpinnerLoading from "../../common/spinnerLoading";
+import SearchQuery from "../../common/form/searchQuery/searchQuery";
 
-const UsersMain = () => {
+const UsersListPage = () => {
     const pageSize = 4;
     const [currentPage, setCurrentPage] = useState(1);
     const [profession, setProfession] = useState();
@@ -138,4 +138,4 @@ const UsersMain = () => {
     return <SpinnerLoading />;
 };
 
-export default UsersMain;
+export default UsersListPage;

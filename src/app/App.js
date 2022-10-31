@@ -3,10 +3,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
-import NavBar from "./components/navBar";
-import Main from "./pages/main";
-import Login from "./pages/login";
-import Users from "./pages/users";
+import NavBar from "./components/ui/navBar";
+import Main from "./layouts/main";
+import Login from "./layouts/login";
+import Users from "./layouts/users";
 
 function App() {
     return (

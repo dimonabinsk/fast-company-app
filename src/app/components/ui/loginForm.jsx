@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import TextField from "../components/textField";
-import { validator } from "../utility/validator";
-// import PropTypes from "prop-types";
+import TextField from "../common/form/textField";
+import { validator } from "../../utility/validator";
 
-const Login = () => {
+const LoginForm = () => {
     const [data, setData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
 
@@ -102,6 +101,4 @@ const Login = () => {
     );
 };
 
-// Login.propTypes = {};
-
-export default Login;
+export default LoginForm;
