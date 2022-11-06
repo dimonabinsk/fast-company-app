@@ -9,7 +9,7 @@ const SelectField = ({
     options,
     error
 }) => {
-    const dataArray =
+    const optionsArray =
         !Array.isArray(options) && typeof options === "object" && options
             ? Object.values(options)
             : options;
@@ -33,10 +33,10 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {dataArray &&
-                    dataArray.map((data) => (
-                        <option value={data._id} key={data._id}>
-                            {data.name}
+                {optionsArray &&
+                    optionsArray.map(({ name, _id }) => (
+                        <option value={_id} key={_id}>
+                            {name}
                         </option>
                     ))}
             </select>
