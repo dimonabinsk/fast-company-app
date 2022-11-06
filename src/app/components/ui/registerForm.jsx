@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react";
 import TextField from "../common/form/textField";
 import { validator } from "../../utility/validator";
+import API from "../../../api";
+import SelectField from "../common/form/selectField";
+import SpinnerLoading from "../common/spinnerLoading";
+// import PropTypes from "prop-types";
 
-const LoginForm = () => {
-    const [data, setData] = useState({ email: "", password: "" });
+const RegisterForm = (props) => {
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+        profession: ""
+    });
     const [errors, setErrors] = useState({});
+    const [professions, setProfessions] = useState();
+
+    useEffect(() => {
+        API.professions.fetchAll().then((data) => setProfessions(data));
+    }, []);
 
     const handleChangeForm = ({ target }) => {
         // console.log(target.name);
@@ -36,6 +49,11 @@ const LoginForm = () => {
             isLength: {
                 message: "Пароль должен содержать не менее 8 символов",
                 value: 8
+            }
+        },
+        profession: {
+            isRequired: {
+                message: "Обязательно выберите Вашу профессию"
             }
         }
     };
@@ -86,6 +104,21 @@ const LoginForm = () => {
                     onChange={handleChangeForm}
                     error={errors.password}
                 />
+                <div className="mb-4">
+                    {professions ? (
+                        <SelectField
+                            label="Выберите профессию"
+                            value={data.profession}
+                            onChange={handleChangeForm}
+                            defaultOption="Выберите..."
+                            options={professions}
+                            error={errors.profession}
+                            id="validationCustom04"
+                        />
+                    ) : (
+                        <SpinnerLoading />
+                    )}{" "}
+                </div>
                 <button
                     className="btn btn-primary w-100 mx-auto"
                     type={"submit"}
@@ -98,4 +131,6 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+// RegisterForm.propTypes = {};
+
+export default RegisterForm;
