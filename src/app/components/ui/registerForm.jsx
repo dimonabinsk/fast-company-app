@@ -6,7 +6,7 @@ import SelectField from "../common/form/selectField";
 import SpinnerLoading from "../common/spinnerLoading";
 // import PropTypes from "prop-types";
 
-const RegisterForm = (props) => {
+const RegisterForm = () => {
     const [data, setData] = useState({
         email: "",
         password: "",
