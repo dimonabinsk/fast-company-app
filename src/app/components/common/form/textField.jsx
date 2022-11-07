@@ -15,7 +15,11 @@ const TextField = ({
         return `form-control  ${error ? "is-invalid" : ""}`;
     };
 
-    const toggleShowPassword = (params) => {
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
+
+    const toggleShowPassword = () => {
         setShowPassword((prev) => !prev);
     };
     return (
@@ -30,7 +34,7 @@ const TextField = ({
                         id={name}
                         name={name}
                         value={value}
-                        onChange={onChange}
+                        onChange={handleChange}
                         placeholder={placeholder}
                         className={getClassesInvalid()}
                     />

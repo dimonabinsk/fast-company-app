@@ -7,6 +7,7 @@ const SelectField = ({
     onChange,
     defaultOption,
     options,
+    name,
     error
 }) => {
     const optionsArray =
@@ -14,29 +15,33 @@ const SelectField = ({
             ? Object.values(options)
             : options;
 
+    const handleChange = ({ target }) => {
+        onChange({ name: target.name, value: target.value });
+    };
+
     const getClassesInvalid = () => {
         return `form-select  ${error ? "is-invalid" : ""}`;
     };
 
     return (
         <>
-            <label htmlFor="validationCustom04" className="form-label">
+            <label htmlFor={name} className="form-label">
                 {label}
             </label>
             <select
                 className={getClassesInvalid()}
-                id="validationCustom04"
-                name="profession"
+                id={name}
+                name={name}
                 value={value}
-                onChange={onChange}
+                onChange={handleChange}
             >
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray &&
-                    optionsArray.map(({ name, _id }) => (
-                        <option value={_id} key={_id}>
-                            {name}
+                {optionsArray.length > 0 &&
+                    optionsArray.map((option) => (
+                        <option value={option.value} key={option.value}>
+                            {option.label}
                         </option>
                     ))}
             </select>
