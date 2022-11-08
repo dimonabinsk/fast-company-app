@@ -15,25 +15,45 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
     const animatedComponents = makeAnimated();
 
     const colorBootstrap = {
-        primary: "#0d6efd",
-        secondary: "#6c757d",
-        success: "#198754",
-        danger: "#dc3545",
-        info: "#0dcaf0",
-        dark: "#212529"
+        "67rdca3eeb7f6fgeed471198": "#0d6efd",
+        "67rdca3eeb7f6fgeed471100": "#6c757d",
+        "67rdca3eeb7f6fgeed4711012": "#198754",
+        "67rdca3eeb7f6fgeed471101": "#dc3545",
+        "67rdca3eeb7f6fgeed471102": "#0dcaf0",
+        "67rdca3eeb7f6fgeed471103": "#212529"
     };
 
     const colorStyles = {
-        control: (styles) => ({ ...styles, backgroundColor: "white" }),
-        option: (styles, { data }) => ({
+        control: (styles) => ({ ...styles, backgroundColor: "#fff" }),
+        menu: (styles) => ({
             ...styles,
-            color: colorBootstrap[data.color]
+            backgroundColor: "#eee",
+            border: "none"
         }),
-        multiValue: (styles, { data }) => ({
-            ...styles,
-            backgroundColor: colorBootstrap[data.color] + "d9",
-            borderRadius: "5px"
-        }),
+        option: (styles, { data }) => {
+            // console.log("option", data);
+            return {
+                ...styles,
+                color: "#eee",
+                borderRadius: "5px",
+                marginTop: "5px",
+                marginBottom: "5px",
+                paddingLeft: "15px",
+                backgroundColor: `${colorBootstrap[data.value]}d9`,
+                ":hover": {
+                    color: "#fff",
+                    backgroundColor: `${colorBootstrap[data.value]}`
+                }
+            };
+        },
+        multiValue: (styles, { data }) => {
+            // console.log("multiValue", data);
+            return {
+                ...styles,
+                backgroundColor: `${colorBootstrap[data.value]}d9`,
+                borderRadius: "5px"
+            };
+        },
         multiValueLabel: (styles) => ({
             ...styles,
             color: "#fff"
@@ -43,25 +63,12 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             color: "#fff",
             ":hover": {
                 color: "#fff",
-                backgroundColor: colorBootstrap[data.color],
+                backgroundColor: `${colorBootstrap[data.value]}`,
                 borderRadius: "5px"
             }
         })
     };
 
-    // const themeColor = (theme) => {
-    //     console.log(theme);
-    //     return {
-    //         ...theme,
-    //         backgroundColor: "#fff",
-
-    //         colors: {
-    //             ...theme.color,
-    //             primary25: "hotpink",
-    //             primary: "black"
-    //         }
-    //     };
-    // };
     return (
         <>
             <label className="form-label">{label}</label>
@@ -77,7 +84,6 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
                 placeholder="Выберете..."
                 components={animatedComponents}
                 styles={colorStyles}
-                // theme={themeColor}
             />
         </>
     );

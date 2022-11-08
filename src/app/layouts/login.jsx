@@ -11,7 +11,7 @@ const Login = () => {
         type === "register" ? type : "login"
     );
 
-    const toggleFormType = (params) => {
+    const toggleFormType = () => {
         setFormType((prev) => (prev === "register" ? "login" : "register"));
     };
 

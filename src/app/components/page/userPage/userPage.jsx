@@ -16,10 +16,12 @@ const UserPage = ({ id }) => {
     }, []);
 
     const handlerClickBtn = () => {
-        history.push("/users");
+        history.push(`/users/${id}/edit`);
+    };
+    const handlerClickBtnAllUser = () => {
+        history.goBack();
     };
 
-    // console.log(user);
     return user ? (
         <>
             <div className=" card text-center">
@@ -34,10 +36,16 @@ const UserPage = ({ id }) => {
                 <span className="h4">Реитинг: {<Rate rate={user.rate} />}</span>
                 <div className=" py-3 card-footer">
                     <button
+                        onClick={handlerClickBtnAllUser}
+                        className="btn btn-primary me-4"
+                    >
+                        Все пользователи
+                    </button>
+                    <button
                         onClick={handlerClickBtn}
                         className="btn btn-primary"
                     >
-                        Все пользователи
+                        Изменить
                     </button>
                 </div>
             </div>

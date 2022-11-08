@@ -12,6 +12,13 @@ export function validator(data, config) {
                 break;
             }
 
+            case "isName": {
+                const nameRegExp =
+                    /^[А-ЯЁA-Z][а-яёa-z]*([-][А-ЯЁA-z][а-яёa-z]*)?\s[А-ЯЁA-Z][а-яёa-z]*$/g;
+                statusValidate = !nameRegExp.test(data.trim());
+                break;
+            }
+
             case "isEmail": {
                 const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
                 statusValidate = !emailRegExp.test(data);

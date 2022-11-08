@@ -68,25 +68,30 @@ const LoginForm = () => {
     return (
         <>
             <form action="" onSubmit={handleSubmit}>
-                <TextField
-                    label={"Электронная почта"}
-                    id={"email"}
-                    name={"email"}
-                    value={data.email}
-                    placeholder={"Введите электронную почту"}
-                    onChange={handleChangeForm}
-                    error={errors.email}
-                />
-                <TextField
-                    label={"Пароль"}
-                    type={"password"}
-                    id={"password"}
-                    name={"password"}
-                    value={data.password}
-                    placeholder={"Введите пароль"}
-                    onChange={handleChangeForm}
-                    error={errors.password}
-                />
+                <div className="mb-4">
+                    <TextField
+                        label={"Электронная почта"}
+                        id={"email"}
+                        name={"email"}
+                        value={data.email}
+                        placeholder={"Введите электронную почту"}
+                        onChange={handleChangeForm}
+                        error={errors.email}
+                    />
+                </div>
+                <div className="mb-4">
+                    <TextField
+                        label={"Пароль"}
+                        type={"password"}
+                        id={"password"}
+                        name={"password"}
+                        value={data.password}
+                        placeholder={"Введите пароль"}
+                        onChange={handleChangeForm}
+                        error={errors.password}
+                    />
+                </div>
+
                 <div className="mb-4">
                     <CheckBoxField
                         value={data.styOn}
