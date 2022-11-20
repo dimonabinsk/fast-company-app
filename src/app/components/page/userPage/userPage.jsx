@@ -4,49 +4,57 @@ import { useHistory } from "react-router-dom";
 
 import API from "../../../../api";
 import SpinnerLoading from "../../common/spinnerLoading";
-import Qualities from "../../ui/qualities";
-import Rate from "../../common/rate";
+import {
+    UserInfoCard,
+    QualitiesCard,
+    CompletedMeetingsCard,
+    Comments
+} from "../../ui";
 
-const UserPage = ({ id }) => {
+const UserPage = ({ userId }) => {
     const history = useHistory();
     const [user, setUser] = useState();
 
     useEffect(() => {
-        API.users.getById(id).then((data) => setUser(data));
+        API.users.getById(userId).then((data) => setUser(data));
     }, []);
-
-    const handlerClickBtn = () => {
-        history.push(`/users/${id}/edit`);
-    };
     const handlerClickBtnAllUser = () => {
         history.goBack();
     };
 
     return user ? (
         <>
-            <div className=" card text-center">
-                <span className="h1 card-header">{user.name}</span>
-                <span className="h2 d-block">
-                    {`Профессия: ${user.profession.name.toUpperCase()}`}{" "}
-                </span>
-                <Qualities qualities={user.qualities} />
-                <span className="h4 d-block">
-                    Количество встреч: {user.completedMeetings}
-                </span>
-                <span className="h4">Реитинг: {<Rate rate={user.rate} />}</span>
-                <div className=" py-3 card-footer">
-                    <button
-                        onClick={handlerClickBtnAllUser}
-                        className="btn btn-primary me-4"
-                    >
-                        Все пользователи
-                    </button>
-                    <button
-                        onClick={handlerClickBtn}
-                        className="btn btn-primary"
-                    >
-                        Изменить
-                    </button>
+            <div className="container">
+                <div className="row gutters-sm">
+                    <div className="col-md-4 mb-3">
+                        <UserInfoCard user={user} userId={userId} />
+                        <div className="card mb-3">
+                            <div className="card-body d-flex flex-column justify-content-center text-center">
+                                <h5 className="card-title">
+                                    <span>Качества</span>
+                                </h5>
+                                <p className="card-text">
+                                    <QualitiesCard qualities={user.qualities} />
+                                </p>
+                            </div>
+                        </div>
+
+                        <CompletedMeetingsCard
+                            meetings={user.completedMeetings}
+                        />
+
+                        <div className=" d-flex flex-column">
+                            <button
+                                onClick={handlerClickBtnAllUser}
+                                className="btn btn-primary"
+                            >
+                                Все пользователи
+                            </button>
+                        </div>
+                    </div>
+                    <div className="col-md-8">
+                        <Comments userId={userId} />
+                    </div>
                 </div>
             </div>
         </>
@@ -56,7 +64,7 @@ const UserPage = ({ id }) => {
 };
 
 UserPage.propTypes = {
-    id: PropTypes.string.isRequired
+    userId: PropTypes.string.isRequired
 };
 
 export default UserPage;

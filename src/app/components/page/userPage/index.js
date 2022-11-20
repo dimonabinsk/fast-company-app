@@ -1,2 +1,4 @@
 import UserPage from "./userPage";
-export default UserPage;
+import AddCommentForm from "./addCommentForm";
+import CommentsList from "./commentsList";
+export { UserPage, AddCommentForm, CommentsList };

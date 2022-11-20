@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({
+const TextareaField = ({
     label,
-    type,
     name,
     value,
     placeholder,
     onChange,
-    error
+    error,
+    height
 }) => {
-    const [showPassword, setShowPassword] = useState(false);
     const getClassesInvalid = () => {
         return `form-control  ${error ? "is-invalid" : ""}`;
     };
 
     const handleChange = ({ target }) => {
         onChange({ name: target.name, value: target.value });
-    };
-
-    const toggleShowPassword = () => {
-        setShowPassword((prev) => !prev);
     };
     return (
         <>
@@ -30,47 +25,34 @@ const TextField = ({
                 </label>
             )}
             <div className="input-group has-validation">
-                <input
-                    type={showPassword ? "text" : type}
+                <textarea
                     id={name}
                     name={name}
                     value={value}
                     onChange={handleChange}
                     placeholder={placeholder}
                     className={getClassesInvalid()}
+                    style={{ height: `${height}px` }}
                 />
-                {type === "password" && (
-                    <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        onClick={toggleShowPassword}
-                    >
-                        <i
-                            className={`bi bi-eye${
-                                showPassword ? "" : "-slash"
-                            }`}
-                        ></i>
-                    </button>
-                )}
                 {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </>
     );
 };
 
-TextField.defaultProps = {
-    type: "text",
+TextareaField.defaultProps = {
+    height: "",
     placeholder: ""
 };
 
-TextField.propTypes = {
+TextareaField.propTypes = {
     label: PropTypes.string,
-    type: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.string,
     placeholder: PropTypes.string,
     onChange: PropTypes.func,
-    error: PropTypes.string
+    error: PropTypes.string,
+    height: PropTypes.string
 };
 
-export default TextField;
+export default TextareaField;

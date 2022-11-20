@@ -5,10 +5,12 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import API from "../../../../api";
 import { validator } from "../../../utility/validator";
 import SpinnerLoading from "../../common/spinnerLoading";
-import TextField from "../../common/form/textField";
-import SelectField from "../../common/form/selectField";
-import RadioField from "../../common/form/radioField";
-import MultiSelectField from "../../common/form/multiSelectField";
+import {
+    TextField,
+    SelectField,
+    RadioField,
+    MultiSelectField
+} from "../../common/form";
 
 const UserEditPage = () => {
     const { userId } = useParams();
@@ -64,6 +66,7 @@ const UserEditPage = () => {
     };
 
     const handleChangeForm = (target) => {
+        // console.log(target);
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
@@ -205,7 +208,7 @@ const UserEditPage = () => {
                                         defaultOption="Выберите..."
                                         options={professions}
                                         error={errors.profession}
-                                        id="validationCustom04"
+                                        id="profession"
                                         name="profession"
                                     />
                                 </div>
