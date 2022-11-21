@@ -75,7 +75,7 @@ const AddCommentForm = ({ onAddComment }) => {
     }, [data]);
     return (
         <>
-            <div className="card mb-2">
+            <div className="card mb-3">
                 <div className="card-body">
                     <form action="" onSubmit={handleSubmit}>
                         <h2>Новый комментарий</h2>

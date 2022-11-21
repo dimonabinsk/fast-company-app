@@ -42,7 +42,7 @@ const CommentItem = ({
                     <div className="d-flex justify-content-between align-items-center">
                         <p className="mb-1">
                             {user && user.name}
-                            <span className="small">
+                            <span className="small fst-italic fw-light ms-2">
                                 {" "}
                                 {displayDate(commentTime)}{" "}
                             </span>

@@ -1,3 +1,33 @@
+const monthDate = {
+    0: "января",
+    1: "февраля",
+    2: "марта",
+    3: "апреля",
+    4: "мая",
+    5: "июня",
+    6: "июля",
+    7: "августа",
+    8: "сентября",
+    9: "октября",
+    10: "ноября",
+    11: "декабря"
+};
+
+function getDateFormat(date, separator) {
+    const day = addZero(date.getDate()); // Получаем день месяца.
+    //   const month = setZero(1 + date.getMonth()); // Получаем месяц.
+    const month = monthDate[date.getMonth()]; // Получаем месяц.
+    const year = date.getFullYear(); // Получаем год.
+    // Складываем все данные в строку через сепаратор и возвращаем.
+
+    return `${day}${separator}${month}${separator}${year}г.`;
+}
+// Добавляем "0" вначале к числу , если число одноразрядное.
+function addZero(number) {
+    if (number < 10) number = `0${number}`;
+    return number;
+}
+
 export function displayDate(data) {
     const date = new Date(parseInt(data));
     const dateNow = new Date();
@@ -16,14 +46,11 @@ export function displayDate(data) {
                 }
                 return "30 минут назад";
             }
-            return `${date.getHours()}:${date.getMinutes()}`;
+            return `${addZero(date.getHours())}:${addZero(date.getMinutes())}`;
         }
 
-        return `${date.getDate()} ${date.toLocaleString("default", {
-            month: "long"
-        })}`;
+        return `${addZero(date.getDate())} ${monthDate[date.getMonth()]}`;
     }
-    return (
-        date.getFullYear() + "." + (date.getMonth() + 1) + "_" + date.getDate()
-    );
+
+    return getDateFormat(date, " ");
 }
