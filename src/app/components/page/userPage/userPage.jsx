@@ -24,7 +24,7 @@ const UserPage = ({ userId }) => {
 
     return user ? (
         <>
-            <div className="container">
+            <div className="container mt-4">
                 <div className="row gutters-sm">
                     <div className="col-md-4 mb-3">
                         <UserInfoCard user={user} userId={userId} />
@@ -48,7 +48,7 @@ const UserPage = ({ userId }) => {
                                 onClick={handlerClickBtnAllUser}
                                 className="btn btn-primary"
                             >
-                                Все пользователи
+                                Все встречи
                             </button>
                         </div>
                     </div>
