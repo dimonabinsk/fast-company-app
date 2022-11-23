@@ -22,7 +22,7 @@ const RegisterForm = () => {
     const [errors, setErrors] = useState({});
     const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState([]);
-
+    // console.log("qualities: ", data.qualities);
     useEffect(() => {
         API.professions.fetchAll().then((data) => {
             const professionsList = Array.isArray(data)
