@@ -69,9 +69,9 @@ const AddCommentForm = ({ onAddComment }) => {
     const isValid = Object.keys(errors).length === 0;
 
     useEffect(() => {
-        //  console.log(data);
-        //  console.log(users);
-        validate();
+        if (data.userId !== "" || data.content !== "") {
+            validate();
+        }
     }, [data]);
     return (
         <>
@@ -109,7 +109,11 @@ const AddCommentForm = ({ onAddComment }) => {
                         <div className="mb-4 d-flex flex-column">
                             <button
                                 className="btn btn-primary"
-                                disabled={!isValid}
+                                disabled={
+                                    data.userId === "" ||
+                                    data.content === "" ||
+                                    !isValid
+                                }
                             >
                                 Оставить комментарий
                             </button>
