@@ -6,8 +6,8 @@ const Bookmark = ({ status, ...rest }) => {
         <>
             <button className="btn btn-sm" {...rest}>
                 <i
-                    className={`bi bi-emoji-heart-eyes${
-                        status ? "-fill text-primary" : ""
+                    className={`bi bi-heart${
+                        status ? "-fill text-warning" : ""
                     } fs-2 `}
                 ></i>
             </button>
