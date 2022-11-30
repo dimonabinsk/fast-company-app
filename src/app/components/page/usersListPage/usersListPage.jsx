@@ -9,6 +9,7 @@ import SearchStatus from "../../ui/searchStatus";
 import GroupList from "../../common/groupList";
 import SpinnerLoading from "../../common/spinnerLoading";
 import SearchQuery from "../../common/form/searchQuery/searchQuery";
+import { useUser } from "../../../hooks/useUsers";
 
 const UsersListPage = () => {
     const pageSize = 4;
@@ -16,12 +17,15 @@ const UsersListPage = () => {
     const [profession, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-    const [users, setUsers] = useState();
-    const [isSearch, setSearch] = useState("");
 
-    useEffect(() => {
-        API.users.fetchAll().then((data) => setUsers(data));
-    }, []);
+    const [isSearch, setSearch] = useState("");
+    // const [users, setUsers] = useState();
+    // useEffect(() => {
+    //     API.users.fetchAll().then((data) => setUsers(data));
+    // }, []);
+
+    const { users } = useUser();
+
     const handlerToggleBookMark = (userId) => {
         const newUsers = users.map((user) => {
             if (userId === user._id) {
@@ -30,11 +34,13 @@ const UsersListPage = () => {
             return user;
         });
 
-        setUsers(newUsers);
+        // setUsers(newUsers);
+        console.log(newUsers);
     };
 
     const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId));
+        // setUsers(users.filter((user) => user._id !== userId));
+        console.log(userId);
     };
 
     useEffect(() => {

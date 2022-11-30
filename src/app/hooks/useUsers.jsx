@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import userService from "../services/user.service";
+import { toast } from "react-toastify";
+import SpinnerLoading from "../components/common/spinnerLoading";
 
 const UserContext = React.createContext();
 
@@ -8,7 +11,41 @@ export const useUser = () => {
 };
 
 const UserProvider = ({ children }) => {
-    return <UserContext.Provider>{children}</UserContext.Provider>;
+    const [users, setUsers] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        getUsers();
+    }, []);
+
+    useEffect(() => {
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
+    }, [error]);
+
+    async function getUsers() {
+        try {
+            const { content } = await userService.get();
+            setUsers(content);
+            setLoading(false);
+        } catch (e) {
+            errorCather(e);
+        }
+    }
+
+    function errorCather(error) {
+        const { message } = error.response.data;
+        setError(message);
+    }
+
+    return (
+        <UserContext.Provider value={{ users }}>
+            {!isLoading ? children : <SpinnerLoading />}
+        </UserContext.Provider>
+    );
 };
 
 UserProvider.propTypes = {
