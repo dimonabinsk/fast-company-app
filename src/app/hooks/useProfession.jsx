@@ -54,11 +54,11 @@ const ProfessionProvider = ({ children }) => {
     );
 };
 
-export default ProfessionProvider;
-
 ProfessionProvider.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ])
 };
+
+export default ProfessionProvider;

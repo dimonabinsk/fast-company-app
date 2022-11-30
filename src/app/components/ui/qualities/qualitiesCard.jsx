@@ -1,13 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import QualitiesItem from "./qualitiesItem";
+import SpinnerLoading from "../../common/spinnerLoading";
+import { useQualities } from "../../../hooks/useQualities";
 
-const QualitiesCard = ({ qualities }) => {
+const QualitiesCard = ({ qualities: id }) => {
+    const { isLoading } = useQualities();
+
     return (
         <>
-            {qualities.map((quality) => (
-                <QualitiesItem key={quality._id} {...quality} />
-            ))}
+            {!isLoading ? (
+                id.map((qId) => (
+                    <QualitiesItem key={qId} id={qId} />
+                ))
+            ) : (
+                <SpinnerLoading />
+            )}
         </>
     );
 };
