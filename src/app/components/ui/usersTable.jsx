@@ -6,6 +6,7 @@ import Table, { TableBody, TableHeader } from "../common/table";
 import Bookmark from "../common/bookmark";
 import QualitiesCard from "./qualities";
 import Rate from "../common/rate";
+import Profession from "./profession";
 
 const UsersTable = ({
     users,
@@ -32,8 +33,8 @@ const UsersTable = ({
             component: (user) => <QualitiesCard qualities={user.qualities} />
         },
         professions: {
-            path: "profession.name",
-            name: "Профессия"
+            name: "Профессия",
+            component: (user) => <Profession id={user.profession} />
         },
         completedMeetings: {
             path: "completedMeetings",
