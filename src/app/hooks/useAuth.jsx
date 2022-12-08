@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 import userService from "../services/user.service";
 import { setTokens } from "../services/localStorage.service";
 
-const httpAuth = axios.create();
+const instanceHTTPAuth = axios.create({
+    baseURL: "https://identitytoolkit.googleapis.com/v1/"
+});
 const AuthContext = React.createContext();
 
 export const useAuth = () => {
@@ -30,10 +32,10 @@ const AuthProvider = ({ children }) => {
     }, [error]);
 
     async function signUp({ email, password, ...rest }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`;
+        const url = `accounts:signUp?key=${key}`;
 
         try {
-            const { data } = await httpAuth.post(url, {
+            const { data } = await instanceHTTPAuth.post(url, {
                 email,
                 password,
                 returnSecureToken: true
@@ -65,29 +67,33 @@ const AuthProvider = ({ children }) => {
     }
 
     async function logIn({ email, password }) {
-        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`;
+        const url = `accounts:signInWithPassword?key=${key}`;
+
         try {
-            await httpAuth.post(url, {
+            const { data } = await instanceHTTPAuth.post(url, {
                 email,
                 password,
                 returnSecureToken: true
             });
+            setTokens(data);
         } catch (e) {
             errorCather(e);
             // console.log(e);
             const { code, message } = e.response.data.error;
             if (code === 400) {
-                if (message === "EMAIL_NOT_FOUND") {
-                    const errorObject = {
+                const errorObject = {
+                    email: {
                         email: "Пользователя с таким email не существует"
-                    };
-                    throw errorObject;
+                    },
+                    password: {
+                        password: "Проверьте правильность введённого пароля"
+                    }
+                };
+                if (message === "EMAIL_NOT_FOUND") {
+                    throw errorObject.email;
                 }
                 if (message === "INVALID_PASSWORD") {
-                    const errorObject = {
-                        password: "Проверьте правильность введённого пароля"
-                    };
-                    throw errorObject;
+                    throw errorObject.password;
                 }
             }
         }
