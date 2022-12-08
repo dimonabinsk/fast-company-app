@@ -12,20 +12,10 @@ export const useAuth = () => {
     return useContext(AuthContext);
 };
 
-// const TOKEN_KEY = "jwt-token";
-// const REFRESH_KEY = "jwt-refresh-token";
-// const EXPIRES_KEY = "jwt-expires";
-
 const AuthProvider = ({ children }) => {
+    const key = process.env.REACT_APP_FIREBASE_KEY;
     const [currentUser, setUser] = useState({});
     const [error, setError] = useState(null);
-
-    // function setTokens({ refreshToken, idToken, expiresIn = 3600 }) {
-    //     const expiresData = new Date().getTime() + expiresIn * 1000;
-    //     localStorage.setItem(TOKEN_KEY, idToken);
-    //     localStorage.setItem(REFRESH_KEY, refreshToken);
-    //     localStorage.setItem(EXPIRES_KEY, expiresData);
-    // }
 
     function errorCather(error) {
         const { message } = error.response.data;
@@ -40,7 +30,6 @@ const AuthProvider = ({ children }) => {
     }, [error]);
 
     async function signUp({ email, password, ...rest }) {
-        const key = process.env.REACT_APP_FIREBASE_KEY;
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`;
 
         try {
@@ -51,10 +40,18 @@ const AuthProvider = ({ children }) => {
             });
             setTokens(data);
             await createUser({ _id: data.localId, email, ...rest });
-            console.log(data);
-            console.log(currentUser);
+            // console.log(data);
         } catch (e) {
             errorCather(e);
+            const { code, message } = e.response.data.error;
+            if (code === 400) {
+                if (message === "EMAIL_EXISTS") {
+                    const errorObject = {
+                        email: "Пользователь с таким email уже существует"
+                    };
+                    throw errorObject;
+                }
+            }
         }
     }
 
@@ -65,8 +62,38 @@ const AuthProvider = ({ children }) => {
         } catch (e) {
             errorCather(e);
         }
-    } return (
-        <AuthContext.Provider value={{ signUp }}>
+    }
+
+    async function logIn({ email, password }) {
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`;
+        try {
+            await httpAuth.post(url, {
+                email,
+                password,
+                returnSecureToken: true
+            });
+        } catch (e) {
+            errorCather(e);
+            // console.log(e);
+            const { code, message } = e.response.data.error;
+            if (code === 400) {
+                if (message === "EMAIL_NOT_FOUND") {
+                    const errorObject = {
+                        email: "Пользователя с таким email не существует"
+                    };
+                    throw errorObject;
+                }
+                if (message === "INVALID_PASSWORD") {
+                    const errorObject = {
+                        password: "Проверьте правильность введённого пароля"
+                    };
+                    throw errorObject;
+                }
+            }
+        }
+    }
+    return (
+        <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
             {children}
         </AuthContext.Provider>
     );

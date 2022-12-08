@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import TextField from "../common/form/textField";
 import { validator } from "../../utility/validator";
@@ -13,6 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 // import PropTypes from "prop-types";
 
 const RegisterForm = () => {
+    const history = useHistory();
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -134,7 +136,7 @@ const RegisterForm = () => {
     //     return qualitiesArray;
     // };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
@@ -149,8 +151,14 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-        console.log(newData);
-        signUp(newData);
+        // console.log(newData);
+        try {
+            await signUp(newData);
+            history.push("/");
+        } catch (e) {
+            // console.log(e);
+            setErrors(e);
+        }
     };
 
     return (
