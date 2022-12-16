@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
 import userService from "../services/user.service";
-import { setTokens } from "../services/localStorage.service";
+import localStorageService, {
+    setTokens
+} from "../services/localStorage.service";
 
-const instanceHTTPAuth = axios.create({
-    baseURL: "https://identitytoolkit.googleapis.com/v1/"
+export const instanceHTTPAuth = axios.create({
+    baseURL: "https://identitytoolkit.googleapis.com/v1/",
+    params: {
+        key: process.env.REACT_APP_FIREBASE_KEY
+    }
 });
 const AuthContext = React.createContext();
 
@@ -15,7 +20,7 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    const key = process.env.REACT_APP_FIREBASE_KEY;
+    // const key = process.env.REACT_APP_FIREBASE_KEY;
     const [currentUser, setUser] = useState({});
     const [error, setError] = useState(null);
 
@@ -25,18 +30,33 @@ const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        if (localStorageService.getAccessToken()) {
+            getUserData();
+        }
+    }, []);
+
+    useEffect(() => {
         if (error !== null) {
             toast.error(error);
             setError(null);
         }
     }, [error]);
 
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    async function getUserData() {
+        try {
+            const { content } = await userService.getCurrentUser();
+            setUser(content);
+        } catch (e) {
+            errorCather(e);
+        }
+    }
 
     async function signUp({ email, password, ...rest }) {
-        const url = `accounts:signUp?key=${key}`;
+        const url = "accounts:signUp?";
 
         try {
             const { data } = await instanceHTTPAuth.post(url, {
@@ -45,7 +65,13 @@ function randomInt(min, max) {
                 returnSecureToken: true
             });
             setTokens(data);
-            await createUser({ _id: data.localId, email, rate: randomInt(1, 5), completedMeetings: randomInt(0, 200), ...rest });
+            await createUser({
+                _id: data.localId,
+                email,
+                rate: randomInt(1, 5),
+                completedMeetings: randomInt(0, 200),
+                ...rest
+            });
             // console.log(data);
         } catch (e) {
             errorCather(e);
@@ -63,7 +89,8 @@ function randomInt(min, max) {
 
     async function createUser(data) {
         try {
-            const { content } = userService.create(data);
+            const { content } = await userService.create(data);
+            console.log(content);
             setUser(content);
         } catch (e) {
             errorCather(e);
@@ -71,7 +98,7 @@ function randomInt(min, max) {
     }
 
     async function logIn({ email, password }) {
-        const url = `accounts:signInWithPassword?key=${key}`;
+        const url = "accounts:signInWithPassword";
 
         try {
             const { data } = await instanceHTTPAuth.post(url, {
@@ -80,6 +107,7 @@ function randomInt(min, max) {
                 returnSecureToken: true
             });
             setTokens(data);
+            getUserData();
         } catch (e) {
             errorCather(e);
             // console.log(e);
