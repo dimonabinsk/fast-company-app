@@ -6,6 +6,7 @@ import userService from "../services/user.service";
 import localStorageService, {
     setTokens
 } from "../services/localStorage.service";
+import SpinnerLoading from "../components/common/spinnerLoading";
 
 export const instanceHTTPAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }) => {
     // const key = process.env.REACT_APP_FIREBASE_KEY;
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
+    const [isLoading, setLoading] = useState(true);
 
     function errorCather(error) {
         const { message } = error.response.data;
@@ -32,6 +34,8 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -52,6 +56,8 @@ const AuthProvider = ({ children }) => {
             setUser(content);
         } catch (e) {
             errorCather(e);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -132,7 +138,7 @@ const AuthProvider = ({ children }) => {
     }
     return (
         <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
-            {children}
+            {!isLoading ? children : <SpinnerLoading />}
         </AuthContext.Provider>
     );
 };
