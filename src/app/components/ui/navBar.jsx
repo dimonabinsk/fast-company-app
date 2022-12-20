@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import NavProfile from "./navProfile";
 
 // import PropTypes from "prop-types";
 
@@ -30,7 +31,7 @@ const NavBar = () => {
                     </ul>
                     <div className="d-flex">
                         {currentUser ? (
-                            <p>{currentUser.name}</p>
+                            <NavProfile/>
                         ) : (
                             <NavLink strict to="/login" className="nav-link">
                                 Авторизация
