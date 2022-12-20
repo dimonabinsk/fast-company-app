@@ -113,7 +113,7 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-            getUserData();
+            await getUserData();
         } catch (e) {
             errorCather(e);
             // console.log(e);

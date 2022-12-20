@@ -12,7 +12,7 @@ const LoginForm = () => {
     const [data, setData] = useState({ email: "", password: "", styOn: false });
     const [errors, setErrors] = useState({});
     const { logIn } = useAuth();
-
+    // console.log(history.location.state.from.pathname);
     const handleChangeForm = (target) => {
         // console.log(target.name);
         setData((prevState) => ({
@@ -72,7 +72,11 @@ const LoginForm = () => {
             await logIn(data);
             // отправляем только если валидно
             console.log("Отправлено:", data);
-            history.push("/");
+            history.push(
+                history.location.state
+                    ? history.location.state.from.pathname
+                    : "/"
+            );
         } catch (e) {
             setErrors(e);
             console.log(e);
