@@ -33,6 +33,14 @@ http.interceptors.request.use(
             }
         }
 
+        const accessToken = localStorageService.getAccessToken();
+        if (accessToken) {
+            config.params = {
+                ...config.params,
+                auth: accessToken
+            };
+        }
+
         // console.log(config.url);
         return config;
     },
