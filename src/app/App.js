@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import QualitiesProvider from "./hooks/useQualities";
 import ProfessionProvider from "./hooks/useProfession";
 import AuthProvider from "./hooks/useAuth";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 function App() {
     return (
@@ -23,7 +24,7 @@ function App() {
                         <Switch>
                             <Route exact path="/" component={Main} />
                             <Route path="/login/:type?" component={Login} />
-                            <Route
+                            <ProtectedRoute
                                 path="/users/:userId?/:edit?"
                                 component={Users}
                             />
