@@ -1,53 +1,42 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 // import PropTypes from "prop-types";
 
 const NavBar = () => {
-    const linkList = [
-        {
-            id: 1,
-            path: "/",
-            name: "Главная"
-        },
-        {
-            id: 2,
-            path: "/login",
-            name: "Авторизация"
-        },
-        {
-            id: 3,
-            path: "/users",
-            name: "Быстрые встречи"
-        }
-    ];
+    const { currentUser } = useAuth();
     return (
         <>
-            <nav className="navbar navbar-expand-lg bg-light">
+            <nav className="navbar navbar-expand-lg bg-light mb-3">
                 <div className="container-fluid">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        {linkList.map(({ id, path, name }, i) => (
-                            <li className="nav-item" key={id}>
-                                {i === 0 ? (
-                                    <NavLink
-                                        exact
-                                        to={path}
-                                        className="nav-link"
-                                    >
-                                        {name}
-                                    </NavLink>
-                                ) : (
-                                    <NavLink
-                                        strict
-                                        to={path}
-                                        className="nav-link"
-                                    >
-                                        {name}
-                                    </NavLink>
-                                )}
+                        <li className="nav-item">
+                            <NavLink exact to="/" className="nav-link">
+                                Главная
+                            </NavLink>
+                        </li>
+                        {currentUser && (
+                            <li className="nav-item">
+                                <NavLink
+                                    strict
+                                    to="/users"
+                                    className="nav-link"
+                                >
+                                    Быстрые встречи
+                                </NavLink>
                             </li>
-                        ))}
+                        )}
                     </ul>
+                    <div className="d-flex">
+                        {currentUser ? (
+                            <p>{currentUser.name}</p>
+                        ) : (
+                            <NavLink strict to="/login" className="nav-link">
+                                Авторизация
+                            </NavLink>
+                        )}
+                    </div>
                 </div>
             </nav>
         </>
