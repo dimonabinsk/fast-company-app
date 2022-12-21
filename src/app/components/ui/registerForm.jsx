@@ -232,7 +232,7 @@ const RegisterForm = () => {
                     type={"submit"}
                     disabled={!isValid}
                 >
-                    Отправить
+                    Зарегистрироваться
                 </button>
             </form>
         </>

@@ -124,7 +124,7 @@ const LoginForm = () => {
                     type={"submit"}
                     disabled={!isValid}
                 >
-                    Отправить
+                    Войти
                 </button>
             </form>
         </>

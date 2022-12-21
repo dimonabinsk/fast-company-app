@@ -11,6 +11,7 @@ import {
     Comments
 } from "../../ui";
 import { useUser } from "../../../hooks/useUsers";
+import { CommentsProvider } from "../../../hooks/useComments";
 
 const UserPage = ({ userId }) => {
     const history = useHistory();
@@ -55,7 +56,9 @@ const UserPage = ({ userId }) => {
                         </div>
                     </div>
                     <div className="col-md-8">
-                        <Comments userId={userId} />
+                        <CommentsProvider>
+                            <Comments userId={userId} />
+                        </CommentsProvider>
                     </div>
                 </div>
             </div>
