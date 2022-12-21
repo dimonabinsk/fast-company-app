@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
-import API from "../../../../api";
+// import API from "../../../../api";
 import SpinnerLoading from "../../common/spinnerLoading";
 import {
     UserInfoCard,
@@ -10,14 +10,16 @@ import {
     CompletedMeetingsCard,
     Comments
 } from "../../ui";
+import { useUser } from "../../../hooks/useUsers";
 
 const UserPage = ({ userId }) => {
     const history = useHistory();
-    const [user, setUser] = useState();
+    const { getUserById } = useUser();
+    const user = getUserById(userId);
 
-    useEffect(() => {
-        API.users.getById(userId).then((data) => setUser(data));
-    }, []);
+    // useEffect(() => {
+    //     API.users.getById(userId).then((data) => setUser(data));
+    // }, []);
     const handlerClickBtnAllUser = () => {
         history.goBack();
     };
