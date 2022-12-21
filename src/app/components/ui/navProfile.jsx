@@ -33,7 +33,7 @@ const NavProfile = () => {
                 >
                     Профиль
                 </NavLink>
-                <NavLink to="logout" strict className="dropdown-item">
+                <NavLink to="/logout" strict className="dropdown-item">
                     Выйти из профиля
                 </NavLink>
             </div>

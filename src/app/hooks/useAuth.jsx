@@ -1,7 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 import userService from "../services/user.service";
 import localStorageService, {
     setTokens
@@ -25,6 +28,7 @@ const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
 
     function errorCather(error) {
         const { message } = error.response.data;
@@ -136,8 +140,14 @@ const AuthProvider = ({ children }) => {
             }
         }
     }
+
+    const logOut = () => {
+        localStorageService.removeAuthData();
+        setUser(null);
+        history.push("/");
+    };
     return (
-        <AuthContext.Provider value={{ signUp, currentUser, logIn }}>
+        <AuthContext.Provider value={{ signUp, currentUser, logIn, logOut }}>
             {!isLoading ? children : <SpinnerLoading />}
         </AuthContext.Provider>
     );
