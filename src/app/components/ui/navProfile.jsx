@@ -14,11 +14,7 @@ const NavProfile = () => {
             <div className="btn dropdown-toggle d-flex align-items-center">
                 <div className="me-2">{currentUser.name}</div>
                 <img
-                    src={`https://avatars.dicebear.com/api/avataaars/${(
-                        Math.random() + 1
-                    )
-                        .toString(36)
-                        .substring(7)}.svg`}
+                    src={currentUser.image}
                     className="rounded-circle shadow-1-strong me-3 img-responsive"
                     alt="avatar"
                     width="35"
