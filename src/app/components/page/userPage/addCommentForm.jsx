@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import API from "../../../../api";
 import { validator } from "../../../utility/validator";
-import { SelectField, TextareaField } from "../../common/form";
-import SpinnerLoading from "../../common/spinnerLoading";
-
-const initialData = { userId: "", content: "" };
+import { TextareaField } from "../../common/form";
+// import SpinnerLoading from "../../common/spinnerLoading";
 
 const AddCommentForm = ({ onAddComment }) => {
-    const [users, setUsers] = useState([]);
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState({});
     const [errors, setErrors] = useState({});
-
-    useEffect(() => {
-        API.users.fetchAll().then((data) => {
-            setUsers(data);
-        });
-        // console.log(users);
-    }, []);
 
     const handleChangeForm = (target) => {
         // console.log(target);
@@ -29,16 +18,11 @@ const AddCommentForm = ({ onAddComment }) => {
     };
 
     const resetForm = () => {
-        setData(initialData);
+        setData({});
         setErrors({});
     };
 
     const validatorConfig = {
-        userId: {
-            isRequired: {
-                message: "Выберете имя отправителя"
-            }
-        },
         content: {
             isRequired: {
                 message: "Сообщение обязательно для заполнения"
@@ -60,12 +44,6 @@ const AddCommentForm = ({ onAddComment }) => {
         resetForm();
     };
 
-    const arrayOfUsers =
-        users &&
-        Object.keys(users).map((userId) => ({
-            label: users[userId].name,
-            value: users[userId]._id
-        }));
     const isValid = Object.keys(errors).length === 0;
 
     useEffect(() => {
@@ -79,25 +57,10 @@ const AddCommentForm = ({ onAddComment }) => {
                 <div className="card-body">
                     <form action="" onSubmit={handleSubmit}>
                         <h2>Новый комментарий</h2>
-                        <div className="mb-4">
-                            {users.length > 0 ? (
-                                <SelectField
-                                    label={"Пользователь"}
-                                    value={data.userId}
-                                    onChange={handleChangeForm}
-                                    options={arrayOfUsers}
-                                    name={"userId"}
-                                    id={"name"}
-                                    defaultOption="Выберите пользователя"
-                                    error={errors.userId}
-                                />
-                            ) : (
-                                <SpinnerLoading />
-                            )}
-                        </div>
+                        <div className="mb-4"></div>
                         <div className="mb-4">
                             <TextareaField
-                                value={data.content}
+                                value={data.content || ""}
                                 name={"content"}
                                 placeholder="Введите комментарий"
                                 onChange={handleChangeForm}

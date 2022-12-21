@@ -5,9 +5,11 @@ import { orderBy } from "lodash";
 import API from "../../../../api";
 import AddCommentForm from "../../page/userPage/addCommentForm";
 import CommentsList from "../../page/userPage/commentsList";
+import { useComments } from "../../../hooks/useComments";
 
 const Comments = ({ userId }) => {
     const [isComments, setComments] = useState([]);
+    const { createComment } = useComments();
 
     useEffect(() => {
         API.comments
@@ -16,9 +18,10 @@ const Comments = ({ userId }) => {
     }, []);
 
     const handleAddComment = (data) => {
-        API.comments
-            .add({ ...data, pageId: userId })
-            .then((data) => setComments([...isComments, data]));
+        // API.comments
+        //     .add({ ...data, pageId: userId })
+        //     .then((data) => setComments([...isComments, data]));
+        createComment(data);
     };
 
     const handleDeleteComment = (commentId) => {
