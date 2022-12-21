@@ -11,10 +11,12 @@ import SpinnerLoading from "../../common/spinnerLoading";
 import SearchQuery from "../../common/form/searchQuery/searchQuery";
 import { useUser } from "../../../hooks/useUsers";
 import { useProfessions } from "../../../hooks/useProfession";
+import { useAuth } from "../../../hooks/useAuth";
 
 const UsersListPage = () => {
     const pageSize = 4;
     const { isLoading: professionsLoading, professions } = useProfessions();
+    const { currentUser } = useAuth();
     const [currentPage, setCurrentPage] = useState(1);
     // const [profession, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -37,7 +39,8 @@ const UsersListPage = () => {
         });
 
         // setUsers(newUsers);
-        console.log(newUsers);
+        // console.log(newUsers);
+        return newUsers;
     };
 
     // const handleDelete = (userId) => {
@@ -73,20 +76,26 @@ const UsersListPage = () => {
     };
 
     if (users) {
-        const filteredUsers = isSearch
-            ? users.filter((user) => {
-                  const name = user.name.toLowerCase();
-                  const search = isSearch.toLowerCase();
-                  return name.indexOf(search) !== -1;
-              })
-            : selectedProf
-            ? users.filter((user) => {
-                  return (
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-                  );
-              })
-            : users;
+        function filterUsers(data) {
+            const filteredUsers = isSearch
+                ? data.filter((user) => {
+                      const name = user.name.toLowerCase();
+                      const search = isSearch.toLowerCase();
+                      return name.indexOf(search) !== -1;
+                  })
+                : selectedProf
+                ? data.filter((user) => {
+                      return (
+                          JSON.stringify(user.profession) ===
+                          JSON.stringify(selectedProf)
+                      );
+                  })
+                : data;
+
+            return filteredUsers.filter((user) => user._id !== currentUser._id);
+        }
+
+        const filteredUsers = filterUsers(users);
 
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
