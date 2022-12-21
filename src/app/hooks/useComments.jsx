@@ -21,8 +21,7 @@ export const CommentsProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setComments(null);
-        setLoading(false);
+        getComment();
     }, []);
 
     async function createComment(data) {
@@ -42,9 +41,17 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    function errorCather(error) {
-        const { message } = error.response.data;
-        setError(message);
+    async function getComment() {
+        try {
+            const { content } = await commentService.getComment(userId);
+            console.log(content);
+            setComments(content);
+        } catch (e) {
+            errorCather(e);
+            // console.log(e);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -53,6 +60,12 @@ export const CommentsProvider = ({ children }) => {
             setError(null);
         }
     }, [error]);
+
+    function errorCather(error) {
+        const { message } = error.response.data;
+        console.log(error);
+        setError(message);
+    }
 
     return (
         <CommentsContext.Provider
