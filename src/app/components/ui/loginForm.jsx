@@ -79,7 +79,7 @@ const LoginForm = () => {
             );
         } catch (e) {
             setErrors(e);
-            console.log(e);
+            // console.log(e);
         }
     };
 

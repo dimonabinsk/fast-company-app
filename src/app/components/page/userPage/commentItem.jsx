@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { displayDate } from "../../../utility/displayDate";
 import { useUser } from "../../../hooks/useUsers";
+import { useAuth } from "../../../hooks/useAuth";
 
 const CommentItem = ({
     _id: idComment,
@@ -13,6 +14,7 @@ const CommentItem = ({
 }) => {
     const { getUserById } = useUser();
     const user = getUserById(userId);
+    const { currentUser } = useAuth();
 
     return (
         <div className="d-flex flex-start mt-2">
@@ -33,12 +35,14 @@ const CommentItem = ({
                                 {displayDate(commentTime)}{" "}
                             </span>
                         </p>
-                        <button
-                            onClick={() => onDeleteComment(idComment)}
-                            className="btn btn-sm text-primary d-flex align-items-center"
-                        >
-                            <i className="bi bi-x-lg"></i>
-                        </button>
+                        {currentUser._id === userId && (
+                            <button
+                                onClick={() => onDeleteComment(idComment)}
+                                className="btn btn-sm text-primary d-flex align-items-center"
+                            >
+                                <i className="bi bi-x-lg"></i>
+                            </button>
+                        )}
                     </div>
                     <p className="small mb-0">{commentContent}</p>
                 </div>
