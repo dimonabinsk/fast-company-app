@@ -4,7 +4,10 @@ const commentEndPoint = "comment/";
 
 const commentService = {
     createComment: async (dataComment) => {
-        const { data } = await httpServices.put(commentEndPoint + dataComment._id, dataComment);
+        const { data } = await httpServices.put(
+            commentEndPoint + dataComment._id,
+            dataComment
+        );
         return data;
     },
     getComment: async (pageId) => {
@@ -14,6 +17,10 @@ const commentService = {
                 equalTo: `"${pageId}"`
             }
         });
+        return data;
+    },
+    deleteComment: async (commentId) => {
+        const { data } = await httpServices.delete(commentEndPoint + commentId);
         return data;
     }
 };

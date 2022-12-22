@@ -23,7 +23,7 @@ http.interceptors.request.use(
                     grant_type: "refresh_token",
                     refresh_token: refreshToken
                 });
-                console.log(data);
+                // console.log(data);
                 localStorageService.setTokens({
                     refreshToken: data.refresh_token,
                     idToken: data.id_token,

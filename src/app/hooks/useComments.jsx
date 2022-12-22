@@ -24,6 +24,13 @@ export const CommentsProvider = ({ children }) => {
         getComment();
     }, [userId]);
 
+    useEffect(() => {
+        if (error !== null) {
+            toast.error(error);
+            setError(null);
+        }
+    }, [error]);
+
     async function createComment(data) {
         const comment = {
             ...data,
@@ -55,22 +62,25 @@ export const CommentsProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        if (error !== null) {
-            toast.error(error);
-            setError(null);
+    async function deleteComment(id) {
+        try {
+            const { content } = await commentService.deleteComment(id);
+            if (content === null) {
+                setComments((prev) =>
+                    prev.filter((comment) => comment._id !== id)
+                );
+            }
+        } catch (e) {
+            errorCather(e);
         }
-    }, [error]);
-
+    }
     function errorCather(error) {
         const { message } = error.response.data;
-        console.log(error);
         setError(message);
     }
-
     return (
         <CommentsContext.Provider
-            value={{ comments, createComment, isLoading }}
+            value={{ comments, createComment, isLoading, deleteComment }}
         >
             {children}
         </CommentsContext.Provider>

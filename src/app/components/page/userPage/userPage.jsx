@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
-// import API from "../../../../api";
 import SpinnerLoading from "../../common/spinnerLoading";
 import {
     UserInfoCard,
@@ -18,11 +17,8 @@ const UserPage = ({ userId }) => {
     const { getUserById } = useUser();
     const user = getUserById(userId);
 
-    // useEffect(() => {
-    //     API.users.getById(userId).then((data) => setUser(data));
-    // }, []);
     const handlerClickBtnAllUser = () => {
-        history.goBack();
+        history.push("/users");
     };
 
     return user ? (

@@ -71,7 +71,7 @@ const LoginForm = () => {
         try {
             await logIn(data);
             // отправляем только если валидно
-            console.log("Отправлено:", data);
+            // console.log("Отправлено:", data);
             history.push(
                 history.location.state
                     ? history.location.state.from.pathname
