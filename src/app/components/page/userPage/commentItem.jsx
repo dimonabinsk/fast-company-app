@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import API from "../../../../api";
-import SpinnerLoading from "../../common/spinnerLoading";
 import { displayDate } from "../../../utility/displayDate";
+import { useUser } from "../../../hooks/useUsers";
 
 const CommentItem = ({
     _id: idComment,
@@ -12,26 +11,13 @@ const CommentItem = ({
     userId,
     onDeleteComment
 }) => {
-    const [user, setUser] = useState();
-    const [isLoading, setIsLoading] = useState(false);
-    useEffect(() => {
-        setIsLoading(true);
-        API.users.getById(userId).then((data) => {
-            setUser(data);
-            setIsLoading(false);
-        });
-    }, []);
+    const { getUserById } = useUser();
+    const user = getUserById(userId);
 
-    return isLoading ? (
-        <SpinnerLoading />
-    ) : (
+    return (
         <div className="d-flex flex-start mt-2">
             <img
-                src={`https://avatars.dicebear.com/api/avataaars/${(
-                    Math.random() + 1
-                )
-                    .toString(36)
-                    .substring(7)}.svg`}
+                src={user.image}
                 className="rounded-circle shadow-1-strong me-3"
                 alt="avatar"
                 width="65"
@@ -41,7 +27,7 @@ const CommentItem = ({
                 <div className="mb-4">
                     <div className="d-flex justify-content-between align-items-center">
                         <p className="mb-1">
-                            {user && user.name}
+                            {user.name}
                             <span className="small fst-italic fw-light ms-2">
                                 {" "}
                                 {displayDate(commentTime)}{" "}
