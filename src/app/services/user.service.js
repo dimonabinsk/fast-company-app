@@ -19,6 +19,14 @@ const userService = {
             userEndPoint + localStorageService.getUserId()
         );
         return data;
+    },
+    updateUser: async (payload) => {
+        console.log(payload);
+        const { data } = await httpServices.patch(
+            userEndPoint + localStorageService.getUserId(),
+            payload
+        );
+        return data;
     }
 };
 

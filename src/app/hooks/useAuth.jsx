@@ -65,6 +65,15 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    async function updateUserData(id) {
+        try {
+            const { content } = await userService.updateUser(id);
+            setUser(content);
+        } catch (e) {
+            errorCather(e);
+        }
+    }
+
     async function signUp({ email, password, ...rest }) {
         const url = "accounts:signUp?";
 
@@ -105,7 +114,7 @@ const AuthProvider = ({ children }) => {
     async function createUser(data) {
         try {
             const { content } = await userService.create(data);
-            console.log(content);
+            // console.log(content);
             setUser(content);
         } catch (e) {
             errorCather(e);
@@ -152,7 +161,7 @@ const AuthProvider = ({ children }) => {
         history.push("/");
     };
     return (
-        <AuthContext.Provider value={{ signUp, currentUser, logIn, logOut }}>
+        <AuthContext.Provider value={{ signUp, currentUser, logIn, logOut, updateUserData }}>
             {!isLoading ? children : <SpinnerLoading />}
         </AuthContext.Provider>
     );
