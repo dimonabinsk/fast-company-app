@@ -161,7 +161,9 @@ const AuthProvider = ({ children }) => {
         history.push("/");
     };
     return (
-        <AuthContext.Provider value={{ signUp, currentUser, logIn, logOut, updateUserData }}>
+        <AuthContext.Provider
+            value={{ signUp, currentUser, logIn, logOut, updateUserData }}
+        >
             {!isLoading ? children : <SpinnerLoading />}
         </AuthContext.Provider>
     );
