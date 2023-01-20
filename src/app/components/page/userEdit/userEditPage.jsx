@@ -57,7 +57,7 @@ const UserEditPage = () => {
                 ...data,
                 qualities: transformUpdateQualities(data.qualities)
             });
-            history.push(`/user/${userId}`);
+            history.push(`/users/${userId}`);
         } catch (e) {
             setErrors(e);
         }
