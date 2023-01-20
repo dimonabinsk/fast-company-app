@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { validator } from "../../../utility/validator";
 import SpinnerLoading from "../../common/spinnerLoading";
@@ -13,8 +13,7 @@ import { useProfessions } from "../../../hooks/useProfession";
 import { useQualities } from "../../../hooks/useQualities";
 import { useAuth } from "../../../hooks/useAuth";
 
-const UserEditPage = () => {
-    const { userId } = useParams();
+const EditUserPage = () => {
     const history = useHistory();
     const [data, setData] = useState();
     const [userLoad, setUserLoad] = useState(true);
@@ -24,7 +23,7 @@ const UserEditPage = () => {
     const { professions, isLoading: profLoading } = useProfessions();
     const { qualities, isLoading: qualLoading } = useQualities();
 
-    function getQualities(id) {
+    function getQualitiesListByIds(id) {
         const qualitiesArray = [];
         for (const elemId of id) {
             for (const quality of qualities) {
@@ -38,14 +37,10 @@ const UserEditPage = () => {
     }
 
     function transformQualities(qualities) {
-        return getQualities(qualities).map((q) => ({
+        return getQualitiesListByIds(qualities).map((q) => ({
             label: q.name,
             value: q._id
         }));
-    }
-
-    function transformUpdateQualities(data) {
-        return data.map((q) => q.value);
     }
 
     async function handleSubmit(e) {
@@ -55,9 +50,9 @@ const UserEditPage = () => {
         try {
             await updateUserData({
                 ...data,
-                qualities: transformUpdateQualities(data.qualities)
+                qualities: data.qualities.map((q) => q.value)
             });
-            history.push(`/users/${userId}`);
+            history.push(`/users/${currentUser._id}`);
         } catch (e) {
             setErrors(e);
         }
@@ -225,14 +220,13 @@ const UserEditPage = () => {
                                 >
                                     Обновить и вернуться назад
                                 </button>
-                                <Link
-                                    to={`user/${userId}`}
+                                <button
                                     className="btn btn-primary w-100 mx-auto mt-3"
                                     onClick={handleGoBack}
                                     role="button"
                                 >
                                     Вернуться назад
-                                </Link>
+                                </button>
                             </form>
                         ) : (
                             <SpinnerLoading />
@@ -248,4 +242,4 @@ const UserEditPage = () => {
 //     edit: PropTypes.string
 // };
 
-export default UserEditPage;
+export default EditUserPage;

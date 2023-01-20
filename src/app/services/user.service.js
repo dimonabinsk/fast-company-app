@@ -21,11 +21,11 @@ const userService = {
         return data;
     },
     updateUser: async (payload) => {
-        console.log(payload);
         const { data } = await httpServices.patch(
             userEndPoint + localStorageService.getUserId(),
             payload
         );
+        console.log(data);
         return data;
     }
 };
