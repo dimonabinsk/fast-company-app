@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Redirect } from "react-router-dom";
-import EditUserPage from "../components/page/userEdit";
+import EditUserPage from "../components/page/EditUserPage";
 import { UserPage } from "../components/page/userPage";
 import UsersListPage from "../components/page/usersListPage";
 import { useAuth } from "../hooks/useAuth";

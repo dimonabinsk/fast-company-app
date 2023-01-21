@@ -9,7 +9,7 @@ import Login from "./layouts/login";
 import Users from "./layouts/users";
 import { ToastContainer } from "react-toastify";
 
-import QualitiesProvider from "./hooks/useQualities";
+// import QualitiesProvider from "./hooks/useQualities";
 import ProfessionProvider from "./hooks/useProfession";
 import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
@@ -25,10 +25,10 @@ function App() {
     }, []);
 
     return (
-        <>
+        <div className="container-fluid p-3">
             <AuthProvider>
                 <NavBar />
-                <QualitiesProvider>
+                {/* <QualitiesProvider> */}
                     <ProfessionProvider>
                         <Switch>
                             <Route exact path="/" component={Main} />
@@ -41,10 +41,10 @@ function App() {
                             <Redirect to="/" />
                         </Switch>
                     </ProfessionProvider>
-                </QualitiesProvider>
+                {/* </QualitiesProvider> */}
             </AuthProvider>
             <ToastContainer />
-        </>
+        </div>
     );
 }
 

@@ -7,9 +7,11 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useQualities } from "../../hooks/useQualities";
+// import { useQualities } from "../../hooks/useQualities";
 import { useProfessions } from "../../hooks/useProfession";
 import { useAuth } from "../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getQualities } from "../../store/qualities";
 
 // import PropTypes from "prop-types";
 
@@ -26,7 +28,8 @@ const RegisterForm = () => {
     });
     const [errors, setErrors] = useState({});
     const { professions } = useProfessions();
-    const { qualities } = useQualities();
+    // const { qualities } = useQualities();
+    const qualities = useSelector(getQualities());
     const { signUp } = useAuth();
 
     const professionsList = Array.isArray(professions)

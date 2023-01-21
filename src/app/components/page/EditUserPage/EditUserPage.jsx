@@ -10,8 +10,13 @@ import {
     MultiSelectField
 } from "../../common/form";
 import { useProfessions } from "../../../hooks/useProfession";
-import { useQualities } from "../../../hooks/useQualities";
+// import { useQualities } from "../../../hooks/useQualities";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import {
+    getQualitiesLoadingStatus,
+    getQualities
+} from "../../../store/qualities";
 
 const EditUserPage = () => {
     const history = useHistory();
@@ -21,7 +26,10 @@ const EditUserPage = () => {
 
     const { currentUser, updateUserData } = useAuth();
     const { professions, isLoading: profLoading } = useProfessions();
-    const { qualities, isLoading: qualLoading } = useQualities();
+    // const { qualities, isLoading: qualLoading } = useQualities();
+
+    const qualities = useSelector(getQualities());
+    const qualLoading = useSelector(getQualitiesLoadingStatus());
 
     function getQualitiesListByIds(id) {
         const qualitiesArray = [];
