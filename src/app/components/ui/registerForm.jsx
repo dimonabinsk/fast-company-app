@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import TextField from "../common/form/textField";
 import { validator } from "../../utility/validator";
@@ -9,13 +9,15 @@ import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 // import { useQualities } from "../../hooks/useQualities";
 // import { useProfessions } from "../../hooks/useProfession";
-import { useAuth } from "../../hooks/useAuth";
-import { useSelector } from "react-redux";
+// import { useAuth } from "../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
 import { getQualities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
+import { signUp } from "../../store/users";
 
 const RegisterForm = () => {
-    const history = useHistory();
+    const dispatch = useDispatch();
+    // const history = useHistory();
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -30,7 +32,7 @@ const RegisterForm = () => {
     const professions = useSelector(getProfessions());
     // const { qualities } = useQualities();
     const qualities = useSelector(getQualities());
-    const { signUp } = useAuth();
+    // const { signUp } = useAuth();
 
     const professionsList = Array.isArray(professions)
         ? professions.map(({ name, _id }) => ({
@@ -136,12 +138,8 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-        try {
-            await signUp(newData);
-            history.push("/");
-        } catch (e) {
-            setErrors(e);
-        }
+
+        dispatch(signUp(newData));
     };
 
     return (
