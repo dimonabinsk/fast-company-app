@@ -97,7 +97,6 @@ function createUser(payload) {
     };
 }
 
-
 export const loadUsersList = () => async (dispatch) => {
     dispatch(usersRequested());
     try {
