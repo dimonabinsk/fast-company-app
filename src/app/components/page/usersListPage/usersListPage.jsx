@@ -9,11 +9,12 @@ import SearchStatus from "../../ui/searchStatus";
 import GroupList from "../../common/groupList";
 import SpinnerLoading from "../../common/spinnerLoading";
 import SearchQuery from "../../common/form/searchQuery/searchQuery";
-import { useUser } from "../../../hooks/useUsers";
+// import { useUser } from "../../../hooks/useUsers";
 // import { useProfessions } from "../../../hooks/useProfession";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
+import { getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
     const pageSize = 4;
@@ -32,7 +33,7 @@ const UsersListPage = () => {
     //     API.users.fetchAll().then((data) => setUsers(data));
     // }, []);
 
-    const { users } = useUser();
+    const users = useSelector(getUsersList());
 
     const handlerToggleBookMark = (userId) => {
         const newUsers = users.map((user) => {

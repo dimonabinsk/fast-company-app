@@ -9,13 +9,15 @@ import {
     CompletedMeetingsCard,
     Comments
 } from "../../ui";
-import { useUser } from "../../../hooks/useUsers";
+// import { useUser } from "../../../hooks/useUsers";
 import { CommentsProvider } from "../../../hooks/useComments";
+import { useSelector } from "react-redux";
+import { getUserById } from "../../../store/users";
 
 const UserPage = ({ userId }) => {
     const history = useHistory();
-    const { getUserById } = useUser();
-    const user = getUserById(userId);
+    // const { getUserById } = useUser();
+    const user = useSelector(getUserById(userId));
     const handlerClickBtnAllUser = () => {
         history.push("/users");
     };
