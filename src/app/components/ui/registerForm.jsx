@@ -8,12 +8,11 @@ import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
 // import { useQualities } from "../../hooks/useQualities";
-import { useProfessions } from "../../hooks/useProfession";
+// import { useProfessions } from "../../hooks/useProfession";
 import { useAuth } from "../../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { getQualities } from "../../store/qualities";
-
-// import PropTypes from "prop-types";
+import { getProfessions } from "../../store/professions";
 
 const RegisterForm = () => {
     const history = useHistory();
@@ -27,7 +26,8 @@ const RegisterForm = () => {
         license: false
     });
     const [errors, setErrors] = useState({});
-    const { professions } = useProfessions();
+    // const { professions } = useProfessions();
+    const professions = useSelector(getProfessions());
     // const { qualities } = useQualities();
     const qualities = useSelector(getQualities());
     const { signUp } = useAuth();
@@ -136,12 +136,10 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-        // console.log(newData);
         try {
             await signUp(newData);
             history.push("/");
         } catch (e) {
-            // console.log(e);
             setErrors(e);
         }
     };
@@ -241,7 +239,5 @@ const RegisterForm = () => {
         </>
     );
 };
-
-// RegisterForm.propTypes = {};
 
 export default RegisterForm;

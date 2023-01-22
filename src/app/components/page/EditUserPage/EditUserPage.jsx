@@ -9,7 +9,7 @@ import {
     RadioField,
     MultiSelectField
 } from "../../common/form";
-import { useProfessions } from "../../../hooks/useProfession";
+// import { useProfessions } from "../../../hooks/useProfession";
 // import { useQualities } from "../../../hooks/useQualities";
 import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import {
     getQualitiesLoadingStatus,
     getQualities
 } from "../../../store/qualities";
+import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
 
 const EditUserPage = () => {
     const history = useHistory();
@@ -25,7 +26,9 @@ const EditUserPage = () => {
     const [errors, setErrors] = useState({});
 
     const { currentUser, updateUserData } = useAuth();
-    const { professions, isLoading: profLoading } = useProfessions();
+    // const { professions, isLoading: profLoading } = useProfessions();
+    const professions = useSelector(getProfessions());
+    const profLoading = useSelector(getProfessionsLoadingStatus());
     // const { qualities, isLoading: qualLoading } = useQualities();
 
     const qualities = useSelector(getQualities());

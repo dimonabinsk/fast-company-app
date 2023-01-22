@@ -10,12 +10,16 @@ import GroupList from "../../common/groupList";
 import SpinnerLoading from "../../common/spinnerLoading";
 import SearchQuery from "../../common/form/searchQuery/searchQuery";
 import { useUser } from "../../../hooks/useUsers";
-import { useProfessions } from "../../../hooks/useProfession";
+// import { useProfessions } from "../../../hooks/useProfession";
 import { useAuth } from "../../../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
 
 const UsersListPage = () => {
     const pageSize = 4;
-    const { isLoading: professionsLoading, professions } = useProfessions();
+    // const { isLoading: professionsLoading, professions } = useProfessions();
+    const professions = useSelector(getProfessions());
+    const professionsLoading = useSelector(getProfessionsLoadingStatus());
     const { currentUser } = useAuth();
     const [currentPage, setCurrentPage] = useState(1);
     // const [profession, setProfession] = useState();

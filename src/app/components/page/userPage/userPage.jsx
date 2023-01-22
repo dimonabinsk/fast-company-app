@@ -16,7 +16,6 @@ const UserPage = ({ userId }) => {
     const history = useHistory();
     const { getUserById } = useUser();
     const user = getUserById(userId);
-console.log(user);
     const handlerClickBtnAllUser = () => {
         history.push("/users");
     };

@@ -10,17 +10,19 @@ import Users from "./layouts/users";
 import { ToastContainer } from "react-toastify";
 
 // import QualitiesProvider from "./hooks/useQualities";
-import ProfessionProvider from "./hooks/useProfession";
+// import ProfessionProvider from "./hooks/useProfession";
 import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
 import { useDispatch } from "react-redux";
 import { loadQualitiesList } from "./store/qualities";
+import { loadProfessionList } from "./store/professions";
 
 function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(loadProfessionList());
         dispatch(loadQualitiesList());
     }, []);
 
@@ -29,18 +31,18 @@ function App() {
             <AuthProvider>
                 <NavBar />
                 {/* <QualitiesProvider> */}
-                    <ProfessionProvider>
-                        <Switch>
-                            <Route exact path="/" component={Main} />
-                            <Route path="/login/:type?" component={Login} />
-                            <Route path="/logout" component={LogOut} />
-                            <ProtectedRoute
-                                path="/users/:userId?/:edit?"
-                                component={Users}
-                            />
-                            <Redirect to="/" />
-                        </Switch>
-                    </ProfessionProvider>
+                {/* <ProfessionProvider> */}
+                <Switch>
+                    <Route exact path="/" component={Main} />
+                    <Route path="/login/:type?" component={Login} />
+                    <Route path="/logout" component={LogOut} />
+                    <ProtectedRoute
+                        path="/users/:userId?/:edit?"
+                        component={Users}
+                    />
+                    <Redirect to="/" />
+                </Switch>
+                {/* </ProfessionProvider> */}
                 {/* </QualitiesProvider> */}
             </AuthProvider>
             <ToastContainer />
