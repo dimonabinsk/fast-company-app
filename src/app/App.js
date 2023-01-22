@@ -17,6 +17,7 @@ import LogOut from "./layouts/logOut";
 import { useDispatch } from "react-redux";
 import { loadQualitiesList } from "./store/qualities";
 import { loadProfessionList } from "./store/professions";
+import { loadUsersList } from "./store/users";
 
 function App() {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function App() {
     useEffect(() => {
         dispatch(loadProfessionList());
         dispatch(loadQualitiesList());
+        dispatch(loadUsersList());
     }, []);
 
     return (
