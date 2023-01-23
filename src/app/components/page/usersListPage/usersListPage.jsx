@@ -11,17 +11,20 @@ import SpinnerLoading from "../../common/spinnerLoading";
 import SearchQuery from "../../common/form/searchQuery/searchQuery";
 // import { useUser } from "../../../hooks/useUsers";
 // import { useProfessions } from "../../../hooks/useProfession";
-import { useAuth } from "../../../hooks/useAuth";
+// import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
-import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
-import { getUsersList } from "../../../store/users";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
+import { getCurrentUser, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
     const pageSize = 4;
     // const { isLoading: professionsLoading, professions } = useProfessions();
     const professions = useSelector(getProfessions());
     const professionsLoading = useSelector(getProfessionsLoadingStatus());
-    const { currentUser } = useAuth();
+
     const [currentPage, setCurrentPage] = useState(1);
     // const [profession, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
@@ -34,7 +37,7 @@ const UsersListPage = () => {
     // }, []);
 
     const users = useSelector(getUsersList());
-
+    const currentUserID = useSelector(getCurrentUser());
     const handlerToggleBookMark = (userId) => {
         const newUsers = users.map((user) => {
             if (userId === user._id) {
@@ -97,7 +100,7 @@ const UsersListPage = () => {
                   })
                 : data;
 
-            return filteredUsers.filter((user) => user._id !== currentUser._id);
+            return filteredUsers.filter((user) => user._id !== currentUserID);
         }
 
         const filteredUsers = filterUsers(users);
