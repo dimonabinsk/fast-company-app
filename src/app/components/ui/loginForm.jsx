@@ -4,14 +4,16 @@ import { useHistory } from "react-router-dom";
 
 import { validator } from "../../utility/validator";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../store/users";
 
 const LoginForm = () => {
     // console.log(process.env);
     const history = useHistory();
     const [data, setData] = useState({ email: "", password: "", styOn: false });
     const [errors, setErrors] = useState({});
-    const { logIn } = useAuth();
+    const dispatch = useDispatch();
     // console.log(history.location.state.from.pathname);
     const handleChangeForm = (target) => {
         // console.log(target.name);
@@ -62,25 +64,24 @@ const LoginForm = () => {
         validate();
     }, [data]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) {
             return;
         }
-        try {
-            await logIn(data);
-            // отправляем только если валидно
-            // console.log("Отправлено:", data);
-            history.push(
-                history.location.state
-                    ? history.location.state.from.pathname
-                    : "/"
-            );
-        } catch (e) {
-            setErrors(e);
-            // console.log(e);
-        }
+        const redirect = history.location.state
+            ? history.location.state.from.pathname
+            : "/";
+
+        dispatch(logIn({ payload: data, redirect }));
+        // отправляем только если валидно
+        // console.log("Отправлено:", data);
+        // history.push(
+        //     history.location.state
+        //         ? history.location.state.from.pathname
+        //         : "/"
+        // );
     };
 
     return (

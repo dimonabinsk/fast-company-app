@@ -15,6 +15,17 @@ const authService = {
             returnSecureToken: true
         });
         return data;
+    },
+    logIn: async ({ email, password }) => {
+        const { data } = await instanceHTTPAuth.post(
+            "accounts:signInWithPassword",
+            {
+                email,
+                password,
+                returnSecureToken: true
+            }
+        );
+        return data;
     }
 };
 
