@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import NavBar from "./components/ui/navBar";
@@ -14,39 +14,31 @@ import { ToastContainer } from "react-toastify";
 import AuthProvider from "./hooks/useAuth";
 import ProtectedRoute from "./components/common/protectedRoute";
 import LogOut from "./layouts/logOut";
-import { useDispatch } from "react-redux";
-import { loadQualitiesList } from "./store/qualities";
-import { loadProfessionList } from "./store/professions";
-import { loadUsersList } from "./store/users";
+import AppLoader from "./components/ui/hoc/appLoader";
 
 function App() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(loadProfessionList());
-        dispatch(loadQualitiesList());
-        dispatch(loadUsersList());
-    }, []);
-
     return (
         <div className="container-fluid p-3">
-            <AuthProvider>
-                <NavBar />
-                {/* <QualitiesProvider> */}
-                {/* <ProfessionProvider> */}
-                <Switch>
-                    <Route exact path="/" component={Main} />
-                    <Route path="/login/:type?" component={Login} />
-                    <Route path="/logout" component={LogOut} />
-                    <ProtectedRoute
-                        path="/users/:userId?/:edit?"
-                        component={Users}
-                    />
-                    <Redirect to="/" />
-                </Switch>
-                {/* </ProfessionProvider> */}
-                {/* </QualitiesProvider> */}
-            </AuthProvider>
+            <AppLoader>
+                <AuthProvider>
+                    <NavBar />
+                    {/* <QualitiesProvider> */}
+                    {/* <ProfessionProvider> */}
+                    <Switch>
+                        <Route exact path="/" component={Main} />
+                        <Route path="/login/:type?" component={Login} />
+                        <Route path="/logout" component={LogOut} />
+                        <ProtectedRoute
+                            path="/users/:userId?/:edit?"
+                            component={Users}
+                        />
+                        <Redirect to="/" />
+                    </Switch>
+                    {/* </ProfessionProvider> */}
+                    {/* </QualitiesProvider> */}
+                </AuthProvider>
+            </AppLoader>
+
             <ToastContainer />
         </div>
     );

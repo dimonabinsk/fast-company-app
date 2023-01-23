@@ -1,41 +1,39 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
+
 import EditUserPage from "../components/page/EditUserPage";
 import { UserPage } from "../components/page/userPage";
 import UsersListPage from "../components/page/usersListPage";
-import { useAuth } from "../hooks/useAuth";
+import UsersLoader from "../components/ui/hoc/usersLoader";
+
 import UserProvider from "../hooks/useUsers";
-import { getDataStatus, loadUsersList } from "../store/users";
+import { getCurrentUser } from "../store/users";
 
 const Users = () => {
     const { userId, edit } = useParams();
-    const { currentUser } = useAuth();
-    const dataStatus = useSelector(getDataStatus());
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!dataStatus) {
-            dispatch(loadUsersList());
-        }
-    }, []);
+    const currentUserID = useSelector(getCurrentUser());
+
     return (
         <>
-            <UserProvider>
-                {userId ? (
-                    edit ? (
-                        userId === currentUser._id ? (
-                            <EditUserPage />
+            <UsersLoader>
+                <UserProvider>
+                    {userId ? (
+                        edit ? (
+                            userId === currentUserID ? (
+                                <EditUserPage />
+                            ) : (
+                                <Redirect to={`/users/${currentUserID}/edit`} />
+                            )
                         ) : (
-                            <Redirect to={`/users/${currentUser._id}/edit`} />
+                            <UserPage userId={userId} />
                         )
                     ) : (
-                        <UserPage userId={userId} />
-                    )
-                ) : (
-                    <UsersListPage />
-                )}
-            </UserProvider>
+                        <UsersListPage />
+                    )}
+                </UserProvider>
+            </UsersLoader>
         </>
     );
 };
