@@ -11,22 +11,27 @@ import {
 } from "../../common/form";
 // import { useProfessions } from "../../../hooks/useProfession";
 // import { useQualities } from "../../../hooks/useQualities";
-import { useAuth } from "../../../hooks/useAuth";
-import { useSelector } from "react-redux";
+// import { useAuth } from "../../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
 import {
     getQualitiesLoadingStatus,
     getQualities
 } from "../../../store/qualities";
-import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
-import { getCurrentUserData } from "../../../store/users";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
+import { getCurrentUserData, updateUserData } from "../../../store/users";
 
 const EditUserPage = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [data, setData] = useState();
     const [userLoad, setUserLoad] = useState(true);
     const [errors, setErrors] = useState({});
     const currentUser = useSelector(getCurrentUserData());
-    const { updateUserData } = useAuth();
+    // const { updateUserData } = useAuth();
+
     // const { professions, isLoading: profLoading } = useProfessions();
     const professions = useSelector(getProfessions());
     const profLoading = useSelector(getProfessionsLoadingStatus());
@@ -55,19 +60,17 @@ const EditUserPage = () => {
         }));
     }
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        try {
-            await updateUserData({
+
+        dispatch(
+            updateUserData({
                 ...data,
                 qualities: data.qualities.map((q) => q.value)
-            });
-            history.push(`/users/${currentUser._id}`);
-        } catch (e) {
-            setErrors(e);
-        }
+            })
+        );
     }
 
     function handleChangeForm(target) {
