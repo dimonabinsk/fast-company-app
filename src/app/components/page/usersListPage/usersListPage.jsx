@@ -17,7 +17,7 @@ import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
-import { getCurrentUser, getUsersList } from "../../../store/users";
+import { getCurrentUserId, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
     const pageSize = 4;
@@ -37,7 +37,7 @@ const UsersListPage = () => {
     // }, []);
 
     const users = useSelector(getUsersList());
-    const currentUserID = useSelector(getCurrentUser());
+    const currentUserID = useSelector(getCurrentUserId());
     const handlerToggleBookMark = (userId) => {
         const newUsers = users.map((user) => {
             if (userId === user._id) {

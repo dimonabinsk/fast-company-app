@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import { displayDate } from "../../../utility/displayDate";
 // import { useUser } from "../../../hooks/useUsers";
-import { useAuth } from "../../../hooks/useAuth";
+// import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
-import { getUserById } from "../../../store/users";
+import { getCurrentUserId, getUserById } from "../../../store/users";
 
 const CommentItem = ({
     _id: idComment,
@@ -16,7 +16,8 @@ const CommentItem = ({
 }) => {
     // const { getUserById } = useUser();
     const user = useSelector(getUserById(userId));
-    const { currentUser } = useAuth();
+    // const { currentUser } = useAuth();
+    const currentUserId = useSelector(getCurrentUserId());
 
     return (
         <div className="d-flex flex-start mt-2">
@@ -37,7 +38,7 @@ const CommentItem = ({
                                 {displayDate(commentTime)}{" "}
                             </span>
                         </p>
-                        {currentUser._id === userId && (
+                        {currentUserId === userId && (
                             <button
                                 onClick={() => onDeleteComment(idComment)}
                                 className="btn btn-sm text-primary d-flex align-items-center"

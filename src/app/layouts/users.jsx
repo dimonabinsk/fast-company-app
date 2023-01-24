@@ -7,18 +7,18 @@ import { UserPage } from "../components/page/userPage";
 import UsersListPage from "../components/page/usersListPage";
 import UsersLoader from "../components/ui/hoc/usersLoader";
 
-import UserProvider from "../hooks/useUsers";
-import { getCurrentUser } from "../store/users";
+// import UserProvider from "../hooks/useUsers";
+import { getCurrentUserId } from "../store/users";
 
 const Users = () => {
     const { userId, edit } = useParams();
 
-    const currentUserID = useSelector(getCurrentUser());
+    const currentUserID = useSelector(getCurrentUserId());
 
     return (
         <>
             <UsersLoader>
-                <UserProvider>
+                {/* <UserProvider> */}
                     {userId ? (
                         edit ? (
                             userId === currentUserID ? (
@@ -32,7 +32,7 @@ const Users = () => {
                     ) : (
                         <UsersListPage />
                     )}
-                </UserProvider>
+                {/* </UserProvider> */}
             </UsersLoader>
         </>
     );

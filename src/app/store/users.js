@@ -153,6 +153,13 @@ export const getUsersList = () => (state) => state.users.entities;
 export const getUsersLoadStatus = () => (state) => state.users.isLoading;
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoad;
-export const getCurrentUser = () => (state) => state.users.auth.userId;
+export const getCurrentUserId = () => (state) => state.users.auth.userId;
+export const getCurrentUserData = () => (state) => {
+    return state.users.entities
+        ? state.users.entities.find(
+              (user) => user._id === state.users.auth.userId
+          )
+        : null;
+};
 
 export default usersReducer;

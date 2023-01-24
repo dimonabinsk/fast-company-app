@@ -1,12 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
+import { getIsLoggedIn } from "../../store/users";
 import NavProfile from "./navProfile";
 
 // import PropTypes from "prop-types";
 
 const NavBar = () => {
-    const { currentUser } = useAuth();
+    // const { currentUser } = useAuth();
+    const isLoggedIn = useSelector(getIsLoggedIn());
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light mb-3">
@@ -17,7 +20,7 @@ const NavBar = () => {
                                 Главная
                             </NavLink>
                         </li>
-                        {currentUser && (
+                        {isLoggedIn && (
                             <li className="nav-item">
                                 <NavLink
                                     strict
@@ -30,8 +33,8 @@ const NavBar = () => {
                         )}
                     </ul>
                     <div className="d-flex">
-                        {currentUser ? (
-                            <NavProfile/>
+                        {isLoggedIn ? (
+                            <NavProfile />
                         ) : (
                             <NavLink strict to="/login" className="nav-link">
                                 Авторизация

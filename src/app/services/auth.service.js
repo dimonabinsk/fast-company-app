@@ -1,6 +1,7 @@
 import axios from "axios";
+import localStorageService from "./localStorage.service";
 
- const instanceHTTPAuth = axios.create({
+const instanceHTTPAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
     params: {
         key: process.env.REACT_APP_FIREBASE_KEY
@@ -25,6 +26,13 @@ const authService = {
                 returnSecureToken: true
             }
         );
+        return data;
+    },
+    refresh: async () => {
+        const { data } = await instanceHTTPAuth.post("token", {
+            grant_type: "refresh_token",
+            refresh_token: localStorageService.getRefreshToken()
+        });
         return data;
     }
 };
