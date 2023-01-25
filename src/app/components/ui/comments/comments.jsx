@@ -4,31 +4,36 @@ import { orderBy } from "lodash";
 
 import AddCommentForm from "../../page/userPage/addCommentForm";
 import CommentsList from "../../page/userPage/commentsList";
-import { useComments } from "../../../hooks/useComments";
+// import { useComments } from "../../../hooks/useComments";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    createComment,
+    delComment,
     getComments,
     getCommentsLoadingStatus,
     loadCommentsList
 } from "../../../store/comments";
 import SpinnerLoading from "../../common/spinnerLoading";
+import { getCurrentUserId } from "../../../store/users";
 
 const Comments = ({ userId }) => {
+    const currentUserId = useSelector(getCurrentUserId());
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(loadCommentsList(userId));
     }, [userId]);
     const isLoading = useSelector(getCommentsLoadingStatus());
     const comments = useSelector(getComments());
-    const { createComment, deleteComment } = useComments();
+    // const { deleteComment } = useComments();
 
-    const handleAddComment = (data) => {
-        createComment(data);
+    const handleAddComment = (commentData) => {
+        if (currentUserId) {
+            dispatch(createComment(commentData, userId, currentUserId));
+        }
     };
 
     const handleDeleteComment = (commentId) => {
-        deleteComment(commentId);
+     dispatch(delComment(commentId, comments));
     };
 
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);

@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 
 import { validator } from "../../../utility/validator";
 import { TextareaField } from "../../common/form";
-// import SpinnerLoading from "../../common/spinnerLoading";
 
 const AddCommentForm = ({ onAddComment }) => {
     const [data, setData] = useState({});
     const [errors, setErrors] = useState({});
 
     const handleChangeForm = (target) => {
-        // console.log(target);
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
