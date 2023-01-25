@@ -10,7 +10,7 @@ import {
     Comments
 } from "../../ui";
 // import { useUser } from "../../../hooks/useUsers";
-import { CommentsProvider } from "../../../hooks/useComments";
+// import { CommentsProvider } from "../../../hooks/useComments";
 import { useSelector } from "react-redux";
 import { getUserById } from "../../../store/users";
 
@@ -53,9 +53,9 @@ const UserPage = ({ userId }) => {
                         </div>
                     </div>
                     <div className="col-md-8">
-                        <CommentsProvider>
+                        {/* <CommentsProvider> */}
                             <Comments userId={userId} />
-                        </CommentsProvider>
+                        {/* </CommentsProvider> */}
                     </div>
                 </div>
             </div>
