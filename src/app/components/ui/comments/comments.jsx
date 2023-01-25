@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { orderBy } from "lodash";
 
 import AddCommentForm from "../../page/userPage/addCommentForm";
 import CommentsList from "../../page/userPage/commentsList";
 import { useComments } from "../../../hooks/useComments";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList
+} from "../../../store/comments";
+import SpinnerLoading from "../../common/spinnerLoading";
 
 const Comments = ({ userId }) => {
-    const { createComment, comments, deleteComment } = useComments();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadCommentsList(userId));
+    }, [userId]);
+    const isLoading = useSelector(getCommentsLoadingStatus());
+    const comments = useSelector(getComments());
+    const { createComment, deleteComment } = useComments();
 
     const handleAddComment = (data) => {
         createComment(data);
@@ -29,10 +43,14 @@ const Comments = ({ userId }) => {
                         <div className="card">
                             <h2 className="text-center lh-lg">Комментарии</h2>
                             {/* <hr /> */}
-                            <CommentsList
-                                onDeleteComment={handleDeleteComment}
-                                isComments={sortedComments}
-                            />
+                            {!isLoading ? (
+                                <CommentsList
+                                    onDeleteComment={handleDeleteComment}
+                                    isComments={sortedComments}
+                                />
+                            ) : (
+                                <SpinnerLoading />
+                            )}
                         </div>
                     </div>
                 )}

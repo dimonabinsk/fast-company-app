@@ -32,7 +32,7 @@ const { professionsRequested, professionsReceived, professionsRequestedFiled } =
     actions;
 
 export const loadProfessionList = () => async (dispatch, getState) => {
-    const { lastFetch } = getState().qualities;
+    const { lastFetch } = getState().professions;
     if (isOutDate(lastFetch)) {
         dispatch(professionsRequested());
         try {
@@ -46,7 +46,7 @@ export const loadProfessionList = () => async (dispatch, getState) => {
 
 export const getProfessions = () => (state) => state.professions.entities;
 export const getProfessionsLoadingStatus = () => (state) =>
-    state.qualities.isLoading;
+    state.professions.isLoading;
 
 export const getProfessionsByIds = (professionsIds) => (state) => {
     if (state.professions.entities) {
