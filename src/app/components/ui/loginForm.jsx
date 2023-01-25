@@ -5,14 +5,15 @@ import { useHistory } from "react-router-dom";
 import { validator } from "../../utility/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 // import { useAuth } from "../../hooks/useAuth";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../store/users";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthError, logIn } from "../../store/users";
 
 const LoginForm = () => {
     // console.log(process.env);
     const history = useHistory();
     const [data, setData] = useState({ email: "", password: "", styOn: false });
     const [errors, setErrors] = useState({});
+    const loginError = useSelector(getAuthError());
     const dispatch = useDispatch();
     // console.log(history.location.state.from.pathname);
     const handleChangeForm = (target) => {
@@ -119,6 +120,7 @@ const LoginForm = () => {
                     >
                         Оставаться в системе
                     </CheckBoxField>
+                    {loginError && <p className="text-danger">{loginError}</p>}
                 </div>
                 <button
                     className="btn btn-primary w-100 mx-auto"
