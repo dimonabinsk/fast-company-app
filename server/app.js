@@ -5,6 +5,8 @@ const chalk = require("chalk");
 
 const PORT = config.get("port") ?? 8080;
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // if (process.env.NODE_ENV === "production") {
 // console.log("Production");
