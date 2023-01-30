@@ -17,8 +17,11 @@ app.use(express.urlencoded({ extended: false }));
 async function start() {
   try {
     await mongoose.connect(config.get("mongoUri"));
+    console.log(chalk.green("MongoDB подключен!"));
     app.listen(PORT, () => {
-      console.log(chalk.green(`Сервер запущен на порте: ${PORT}`));
+      console.log(
+        chalk.greenBright(`Сервер запущен host: http://localhost:${PORT}/`)
+      );
     });
   } catch (error) {
     console.log(chalk.red(error.message));
