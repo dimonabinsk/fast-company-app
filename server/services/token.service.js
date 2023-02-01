@@ -10,7 +10,7 @@ class TokenService {
     const accessToken = jwt.sign(payload, config.get("accessSecret"), {
       expiresIn: "1h",
     });
-    const refreshToken = jwt.sign(payload, config.get("refreshToken"), {
+    const refreshToken = jwt.sign(payload, config.get("refreshSecret"), {
       expiresIn: "1h",
     });
 
@@ -38,6 +38,23 @@ class TokenService {
 
     return token;
   }
+
+  validateRefresh(refreshToken) {
+    try {
+      return jwt.verify(refreshToken, config.get("refreshSecret"));
+    } catch (error) {
+      return null;
+    }
+    }
+
+    async findToken(refreshToken) {
+        try {
+            return await Token.findOne({ refreshToken });
+        } catch (error) {
+            return null;
+        }
+
+    }
 }
 
 module.exports = new TokenService();
