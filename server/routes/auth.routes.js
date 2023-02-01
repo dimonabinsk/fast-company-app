@@ -1,5 +1,5 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const router = express.Router({ mergeParams: true });
 const User = require("../models/User");
 const { generateUserData } = require("../utils/helpers");
@@ -37,6 +37,7 @@ router.post("/signUp", async (req, res) => {
     const tokens = tokenService.generate({
       _id: newUser._id,
     });
+    await tokenService.save(newUser._id, tokens.refreshToken);
 
     res.status(201).send({
       ...tokens,
