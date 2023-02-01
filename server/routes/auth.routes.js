@@ -34,15 +34,14 @@ router.post("/signUp", async (req, res) => {
       password: hashedPassword,
     });
 
-      const tokens = tokenService.generate({
-          _id: newUser._id
-      });
+    const tokens = tokenService.generate({
+      _id: newUser._id,
+    });
 
-      res.status(201).send({
-          ...tokens,
-          userId: newUser._id
-      })
-
+    res.status(201).send({
+      ...tokens,
+      userId: newUser._id,
+    });
   } catch (error) {
     res.status(500).json({
       massage: "На сервере произошла ошибка. Попробуйте позже",
