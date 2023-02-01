@@ -6,15 +6,15 @@ const router = express.Router({ mergeParams: true });
 router.use("/auth", require("./auth.routes"));
 
 // /api/comment
-router.use("/comment", require("./auth.routes"));
+router.use("/comment", require("./comment.routes"));
 
 // /api/profession
-router.use("/profession", require("./auth.routes"));
+router.use("/profession", require("./profession.routes"));
 
 // /api/quality
-router.use("/quality", require("./auth.routes"));
+router.use("/quality", require("./quality.routes"));
 
 // /api/user
-router.use("/user", require("./auth.routes"));
+router.use("/user", require("./user.routes"));
 
 module.exports = router;
