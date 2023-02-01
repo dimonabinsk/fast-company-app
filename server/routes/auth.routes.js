@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const { check, validationResult } = require("express-validator");
 const router = express.Router({ mergeParams: true });
 const User = require("../models/User");
 const { generateUserData } = require("../utils/helpers");
@@ -11,8 +12,27 @@ const tokenService = require("../services/token.service");
 // 3. hash password
 // 4. create user
 // 5. generate tokens
-router.post("/signUp", async (req, res) => {
+
+const signUpValidations = [
+  check("email").isEmail().withMessage("Некорректный email"),
+  check("password")
+    .isLength({ min: 8 })
+    .withMessage("Минимальная длина пароля 8 символов")
+    .matches(/\d/)
+    .withMessage("Пароль должен содержать число"),
+];
+router.post("/signUp", ...signUpValidations, async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        error: {
+          message: "INVALID_DATA",
+          code: 400,
+          errors: errors.array(),
+        },
+      });
+    }
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
