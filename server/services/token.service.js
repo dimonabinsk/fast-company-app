@@ -45,16 +45,23 @@ class TokenService {
     } catch (error) {
       return null;
     }
-    }
+  }
 
-    async findToken(refreshToken) {
-        try {
-            return await Token.findOne({ refreshToken });
-        } catch (error) {
-            return null;
-        }
-
+  validateAccess(accessToken) {
+    try {
+      return jwt.verify(accessToken, config.get("accessSecret"));
+    } catch (error) {
+      return null;
     }
+  }
+
+  async findToken(refreshToken) {
+    try {
+      return await Token.findOne({ refreshToken });
+    } catch (error) {
+      return null;
+    }
+  }
 }
 
 module.exports = new TokenService();
