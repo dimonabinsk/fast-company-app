@@ -14,7 +14,7 @@ const schema = new Schema(
     rate: Number,
     sex: {
       type: String,
-      enum: ["male", "female", "other"],
+      enum: ["male", "female"],
     },
     profession: {
       type: Schema.Types.ObjectId,
