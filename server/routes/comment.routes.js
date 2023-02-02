@@ -32,23 +32,22 @@ router
   });
 
 router.delete("/:commentId", auth, async (req, res) => {
-    try {
-        const { commentId } = req.params;
+  try {
+    const { commentId } = req.params;
 
-        const removedComment = await Comment.findById(commentId);
+    const removedComment = await Comment.findById(commentId);
 
-        if (removedComment.userId.toString() === req.user._id) {
-            await removedComment.remove();
-            return res.status(200).send(null);
-        } else {
-            res.status(401).json({ message: "Unauthorized" });
-        }
-
-    } catch (error) {
-res.status(500).json({
-  massage: "На сервере произошла ошибка. Попробуйте позже",
-});
+    if (removedComment.userId.toString() === req.user._id) {
+      await removedComment.remove();
+      return res.status(200).send(null);
+    } else {
+      res.status(401).json({ message: "Unauthorized" });
     }
+  } catch (error) {
+    res.status(500).json({
+      massage: "На сервере произошла ошибка. Попробуйте позже",
+    });
+  }
 });
 
 module.exports = router;
