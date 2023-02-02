@@ -4,18 +4,18 @@ const professionMock = require("../mock/professions.json");
 const qualitiesMock = require("../mock/qualities.json");
 
 module.exports = async () => {
-    const professions = await Profession.find();
-    const qualities = await Quality.find();
+  const professions = await Profession.find();
+  const qualities = await Quality.find();
   if (professions.length !== professionMock.length) {
     await createInitialEntity(Profession, professionMock);
-    }
-    if (qualities.length !== qualitiesMock.length) {
-      await createInitialEntity(Quality, qualitiesMock);
-    }
+  }
+  if (qualities.length !== qualitiesMock.length) {
+    await createInitialEntity(Quality, qualitiesMock);
+  }
 };
 
 async function createInitialEntity(Model, data) {
-    await Model.collection.drop();
+  await Model.collection.drop();
   return Promise.all(
     data.map(async (item) => {
       try {
