@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
-import TextField from "../common/form/textField";
 import { useHistory } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 import { validator } from "../../utility/validator";
 import CheckBoxField from "../common/form/checkBoxField";
-// import { useAuth } from "../../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
+import TextField from "../common/form/textField";
 import { getAuthError, logIn } from "../../store/users";
 
 const LoginForm = () => {
-    // console.log(process.env);
     const history = useHistory();
     const [data, setData] = useState({ email: "", password: "", styOn: false });
     const [errors, setErrors] = useState({});
     const loginError = useSelector(getAuthError());
     const dispatch = useDispatch();
-    // console.log(history.location.state.from.pathname);
+
     const handleChangeForm = (target) => {
-        // console.log(target.name);
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
@@ -49,10 +45,7 @@ const LoginForm = () => {
             }
         }
     };
-    /**
-     * Object.keys() вернёт массив ключей объекта с ошибками.
-     * Если длина этого массива равна 0, то ошибок нет
-     */
+
     const isValid = Object.keys(errors).length === 0;
 
     const validate = () => {
@@ -71,18 +64,12 @@ const LoginForm = () => {
         if (!isValid) {
             return;
         }
+        console.log(history.location.state);
         const redirect = history.location.state
             ? history.location.state.from.pathname
             : "/";
 
         dispatch(logIn({ payload: data, redirect }));
-        // отправляем только если валидно
-        // console.log("Отправлено:", data);
-        // history.push(
-        //     history.location.state
-        //         ? history.location.state.from.pathname
-        //         : "/"
-        // );
     };
 
     return (

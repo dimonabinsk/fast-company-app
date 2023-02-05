@@ -37,7 +37,6 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
         dispatch(qualitiesRequested());
         try {
             const { content } = await qualityService.fetchAll();
-            // console.log(content);
             dispatch(qualitiesReceived(content));
         } catch (error) {
             dispatch(qualitiesRequestedFiled(error.message));
@@ -46,16 +45,18 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
 };
 
 export const getQualities = () => (state) => state.qualities.entities;
+
 export const getQualitiesLoadingStatus = () => (state) =>
     state.qualities.isLoading;
+
 export const getQualitiesByIds = (qualitiesIds) => (state) => {
-    // console.log(qualitiesIds);
     if (state.qualities.entities) {
+        // console.log(qualitiesIds);
         const qualitiesArray = [];
         for (const qualId of qualitiesIds) {
-            // console.log(qualId);
-            // console.log(state.qualities.entities);
             for (const quality of state.qualities.entities) {
+                // console.log("quality", quality._id);
+                // console.log("qual", qualId);
                 if (quality._id === qualId) {
                     qualitiesArray.push(quality);
                     break;

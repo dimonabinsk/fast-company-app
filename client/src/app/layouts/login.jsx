@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import LoginForm from "../components/ui/loginForm";
 import RegisterForm from "../components/ui/registerForm";
 
-// import PropTypes from "prop-types";
-
 const Login = () => {
     const { type } = useParams();
     const [formType, setFormType] = useState(
@@ -50,7 +48,5 @@ const Login = () => {
         </>
     );
 };
-
-// Login.propTypes = {};
 
 export default Login;

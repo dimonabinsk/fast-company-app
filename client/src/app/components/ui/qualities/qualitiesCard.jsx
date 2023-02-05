@@ -1,44 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import QualitiesItem from "./qualitiesItem";
-import SpinnerLoading from "../../common/spinnerLoading";
-// import { useQualities } from "../../../hooks/useQualities";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    getQualitiesByIds,
-    getQualitiesLoadingStatus,
-    loadQualitiesList
-} from "../../../store/qualities";
+import QualitiesList from "./qualitiesList";
 
-const QualitiesCard = ({ qualities: id }) => {
-    // const { isLoading } = useQualities();
-
-    const dispatch = useDispatch();
-    const isLoading = useSelector(getQualitiesLoadingStatus());
-    const qualitiesList = useSelector(getQualitiesByIds(id));
-
-    useEffect(() => {
-        dispatch(loadQualitiesList());
-    }, []);
-    if (isLoading) {
-        return (
-            <>
-                <SpinnerLoading />
-            </>
-        );
-    }
-
+const QualitiesCard = ({ data }) => {
     return (
         <>
-            {qualitiesList.map((qual) => (
-                <QualitiesItem key={qual._id} {...qual} />
-            ))}
+            <div className="card mb-3">
+                <div className="card-body d-flex flex-column justify-content-center text-center">
+                    <h5 className="card-title">
+                        <span>Качества</span>
+                    </h5>
+                    <p className="card-text">
+                        <QualitiesList qualities={data} />
+                    </p>
+                </div>
+            </div>
         </>
     );
 };
 
 QualitiesCard.propTypes = {
-    qualities: PropTypes.array.isRequired
+    data: PropTypes.array
 };
 
 export default QualitiesCard;

@@ -1,6 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import commentService from "../services/comment.service";
-import { nanoid } from "nanoid";
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -25,7 +24,9 @@ const commentsSlice = createSlice({
             state.entities.push(action.payload);
         },
         deleteComment: (state, action) => {
-            state.entities = action.payload;
+            state.entities = state.entities.filter(
+                (comment) => comment._id !== action.payload
+            );
         }
     }
 });
@@ -53,32 +54,23 @@ export const loadCommentsList = (userId) => async (dispatch) => {
     }
 };
 
-export const createComment =
-    (commentData, userId, currentUserId) => async (dispatch) => {
-        dispatch(addCommentRequested(commentData));
-        const comment = {
-            ...commentData,
-            _id: nanoid(),
-            pageId: userId,
-            created_at: Date.now(),
-            userId: currentUserId
-        };
-        try {
-            const { content } = await commentService.createComment(comment);
-            dispatch(addComment(content));
-        } catch (error) {
-            dispatch(commentsRequestedFiled(error.message));
-        }
-    };
+export const createComment = (payload) => async (dispatch) => {
+    dispatch(addCommentRequested());
 
-export const delComment = (id, comments) => async (dispatch) => {
+    try {
+        const { content } = await commentService.createComment(payload);
+        dispatch(addComment(content));
+    } catch (error) {
+        dispatch(commentsRequestedFiled(error.message));
+    }
+};
+
+export const delComment = (commentId) => async (dispatch) => {
     dispatch(deleteCommentRequested());
     try {
-        const { content } = await commentService.deleteComment(id);
-        if (content === null) {
-            dispatch(
-                deleteComment(comments.filter((comment) => comment._id !== id))
-            );
+        const { content } = await commentService.deleteComment(commentId);
+        if (!content) {
+            dispatch(deleteComment(commentId));
         }
     } catch (error) {
         dispatch(commentsRequestedFiled(error.message));

@@ -26,6 +26,10 @@ const userService = {
             payload
         );
         return data;
+    },
+    updateUserBookmark: async (payload) => {
+        const { data } = await httpServices.patch(userEndPoint, payload);
+        return data;
     }
 };
 

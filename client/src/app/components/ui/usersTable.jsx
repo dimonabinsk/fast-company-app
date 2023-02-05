@@ -4,16 +4,12 @@ import { Link } from "react-router-dom";
 
 import Table, { TableBody, TableHeader } from "../common/table";
 import Bookmark from "../common/bookmark";
-import QualitiesCard from "./qualities";
+
 import Rate from "../common/rate";
 import Profession from "./profession";
+import QualitiesList from "./qualities/qualitiesList";
 
-const UsersTable = ({
-    users,
-    onSort,
-    selectedSort,
-    onToggleBookMark
-}) => {
+const UsersTable = ({ users, onSort, selectedSort }) => {
     const columns = {
         name: {
             path: "name",
@@ -29,7 +25,7 @@ const UsersTable = ({
         },
         qualities: {
             name: "Качества",
-            component: (user) => <QualitiesCard qualities={user.qualities} />
+            component: (user) => <QualitiesList qualities={user.qualities} />
         },
         professions: {
             name: "Профессия",
@@ -47,23 +43,8 @@ const UsersTable = ({
         bookmark: {
             path: "bookmark",
             name: "Избранное",
-            component: (user) => (
-                <Bookmark
-                    status={user.bookmark}
-                    onClick={() => onToggleBookMark(user._id)}
-                />
-            )
+            component: (user) => <Bookmark userBookmarkId={user._id} />
         }
-        // delete: {
-        //     component: (user) => (
-        //         <button
-        //             className="btn btn-danger p-1"
-        //             onClick={() => onDelete(user._id)}
-        //         >
-        //             Удалить
-        //         </button>
-        //     )
-        // }
     };
     return (
         <Table>
@@ -76,9 +57,7 @@ const UsersTable = ({
 UsersTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
-    selectedSort: PropTypes.object.isRequired,
-    onToggleBookMark: PropTypes.func.isRequired
-    // onDelete: PropTypes.func.isRequired
+    selectedSort: PropTypes.object.isRequired
 };
 
 export default UsersTable;

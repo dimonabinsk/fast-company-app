@@ -1,6 +1,5 @@
 import React from "react";
 import useMockData from "../utility/mockData";
-// import PropTypes from "prop-types";
 
 const Main = () => {
     const { error, initialize, progress, status } = useMockData();
@@ -36,7 +35,5 @@ const Main = () => {
         </div>
     );
 };
-
-// Main.propTypes = {};
 
 export default Main;

@@ -2,25 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import Rate from "../../common/rate";
-// import { useAuth } from "../../../hooks/useAuth";
+
 import { useSelector } from "react-redux";
-import { getCurrentUserId } from "../../../store/users";
-import { getProfessionsByIds } from "../../../store/professions";
+import { getCurrentUserData } from "../../../store/users";
 
-const UserInfoCard = ({ userId, user }) => {
-    // const { currentUser } = useAuth();
-    const currentUserId = useSelector(getCurrentUserId());
-    const profession = useSelector(getProfessionsByIds(user.profession));
-
+const UserInfoCard = ({ user }) => {
     const history = useHistory();
+    const currentUser = useSelector(getCurrentUserData());
+
     const handleUserEdit = () => {
-        history.push(`/users/${userId}/edit`);
+        history.push(`${history.location.pathname}/edit`);
     };
 
     return (
         <div className="card mb-3">
             <div className="card-body">
-                {currentUserId === user._id && (
+                {currentUser._id === user._id && (
                     <button
                         className="position-absolute top-0 end-0 btn btn-light btn-sm"
                         onClick={handleUserEdit}
@@ -39,7 +36,9 @@ const UserInfoCard = ({ userId, user }) => {
                     />
                     <div className="mt-3">
                         <h4>{user.name}</h4>
-                        <p className="text-secondary mb-1">{profession.name}</p>
+                        <p className="text-secondary mb-1">
+                            {user.profession.name}
+                        </p>
                         <div className="text-muted">
                             <i
                                 className="bi bi-caret-down-fill text-primary"
@@ -59,8 +58,7 @@ const UserInfoCard = ({ userId, user }) => {
 };
 
 UserInfoCard.propTypes = {
-    user: PropTypes.object,
-    userId: PropTypes.string.isRequired
+    user: PropTypes.object
 };
 
 export default UserInfoCard;
