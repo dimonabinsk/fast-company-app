@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { useProfessions } from "../../../hooks/useProfession";
 import SpinnerLoading from "../../common/spinnerLoading";
 import { useSelector } from "react-redux";
 import {
@@ -9,7 +8,6 @@ import {
 } from "../../../store/professions";
 
 const Profession = ({ id }) => {
-    // const {  getProfession } = useProfessions();
     const isLoading = useSelector(getProfessionsLoadingStatus());
     const prof = useSelector(getProfessionsByIds(id));
 

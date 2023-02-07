@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { getDataStatus, loadUsersList } from "../../../store/users";
 import PropTypes from "prop-types";
 import { loadQualitiesList } from "../../../store/qualities";
 import { loadProfessionList } from "../../../store/professions";

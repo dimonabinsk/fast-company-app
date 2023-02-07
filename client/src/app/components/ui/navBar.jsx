@@ -1,14 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-// import { useAuth } from "../../hooks/useAuth";
 import { getIsLoggedIn } from "../../store/users";
 import NavProfile from "./navProfile";
 
-// import PropTypes from "prop-types";
-
 const NavBar = () => {
-    // const { currentUser } = useAuth();
     const isLoggedIn = useSelector(getIsLoggedIn());
     return (
         <>
@@ -16,7 +12,12 @@ const NavBar = () => {
                 <div className="container-fluid">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <NavLink exact to="/" className="nav-link">
+                            <NavLink
+                                exact
+                                to="/"
+                                className="nav-link"
+                                aria-current="page"
+                            >
                                 Главная
                             </NavLink>
                         </li>
@@ -26,6 +27,7 @@ const NavBar = () => {
                                     strict
                                     to="/users"
                                     className="nav-link"
+                                    aria-current="page"
                                 >
                                     Быстрые встречи
                                 </NavLink>
@@ -36,7 +38,12 @@ const NavBar = () => {
                         {isLoggedIn ? (
                             <NavProfile />
                         ) : (
-                            <NavLink strict to="/login" className="nav-link">
+                            <NavLink
+                                strict
+                                to="/login"
+                                className="nav-link"
+                                aria-current="page"
+                            >
                                 Авторизация
                             </NavLink>
                         )}
@@ -46,7 +53,5 @@ const NavBar = () => {
         </>
     );
 };
-
-// Header.propTypes = {};
 
 export default NavBar;

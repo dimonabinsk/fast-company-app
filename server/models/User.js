@@ -12,6 +12,7 @@ const schema = new Schema(
     completedMeetings: Number,
     image: String,
     rate: Number,
+    bookmark: Array,
     sex: {
       type: String,
       enum: ["male", "female"],

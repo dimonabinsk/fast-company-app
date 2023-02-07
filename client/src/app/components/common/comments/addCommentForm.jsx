@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { validator } from "../../../utility/validator";
-import { TextareaField } from "../../common/form";
+import { TextareaField } from "../form";
 
-const AddCommentForm = ({ onAddComment }) => {
+const AddCommentForm = ({ onSubmitComment }) => {
     const [data, setData] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -38,7 +38,7 @@ const AddCommentForm = ({ onAddComment }) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        onAddComment(data);
+        onSubmitComment(data);
         resetForm();
     };
 
@@ -76,7 +76,7 @@ const AddCommentForm = ({ onAddComment }) => {
                                     !isValid
                                 }
                             >
-                                Оставить комментарий
+                                Опубликовать комментарий
                             </button>
                         </div>
                     </form>
@@ -90,7 +90,7 @@ AddCommentForm.propTypes = {
     users: PropTypes.array,
     errors: PropTypes.object,
     data: PropTypes.object,
-    onAddComment: PropTypes.func,
+    onSubmitComment: PropTypes.func,
     onChangeForm: PropTypes.func,
     isValid: PropTypes.bool
 };

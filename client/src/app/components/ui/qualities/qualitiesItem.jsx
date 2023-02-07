@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { useQualities } from "../../../hooks/useQualities";
 
 const QualitiesItem = ({ _id, color, name }) => {
     return (

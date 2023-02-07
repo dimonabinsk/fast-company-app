@@ -24,7 +24,6 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    // const key = process.env.REACT_APP_FIREBASE_KEY;
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(true);

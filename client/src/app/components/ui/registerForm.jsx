@@ -7,9 +7,6 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-// import { useQualities } from "../../hooks/useQualities";
-// import { useProfessions } from "../../hooks/useProfession";
-// import { useAuth } from "../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { getQualities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
@@ -17,7 +14,6 @@ import { signUp } from "../../store/users";
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
-    // const history = useHistory();
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -28,11 +24,8 @@ const RegisterForm = () => {
         license: false
     });
     const [errors, setErrors] = useState({});
-    // const { professions } = useProfessions();
     const professions = useSelector(getProfessions());
-    // const { qualities } = useQualities();
     const qualities = useSelector(getQualities());
-    // const { signUp } = useAuth();
 
     const professionsList = Array.isArray(professions)
         ? professions.map(({ name, _id }) => ({
@@ -56,12 +49,7 @@ const RegisterForm = () => {
               color
           }));
 
-    // useEffect(() => {
-    //     console.log(qualities);
-    // }, [qualities]);
-
     const handleChangeForm = (target) => {
-        // console.log(target.name);
         setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
@@ -113,10 +101,7 @@ const RegisterForm = () => {
             }
         }
     };
-    /**
-     * Object.keys() вернёт массив ключей объекта с ошибками.
-     * Если длина этого массива равна 0, то ошибок нет
-     */
+
     const isValid = Object.keys(errors).length === 0;
 
     const validate = () => {
@@ -138,7 +123,6 @@ const RegisterForm = () => {
             ...data,
             qualities: data.qualities.map((q) => q.value)
         };
-
         dispatch(signUp(newData));
     };
 

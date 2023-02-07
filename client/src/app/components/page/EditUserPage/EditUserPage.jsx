@@ -9,9 +9,7 @@ import {
     RadioField,
     MultiSelectField
 } from "../../common/form";
-// import { useProfessions } from "../../../hooks/useProfession";
-// import { useQualities } from "../../../hooks/useQualities";
-// import { useAuth } from "../../../hooks/useAuth";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
     getQualitiesLoadingStatus,
@@ -24,21 +22,46 @@ import {
 import { getCurrentUserData, updateUserData } from "../../../store/users";
 
 const EditUserPage = () => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const [data, setData] = useState();
     const [userLoad, setUserLoad] = useState(true);
-    const [errors, setErrors] = useState({});
+    const [data, setData] = useState();
     const currentUser = useSelector(getCurrentUserData());
-    // const { updateUserData } = useAuth();
-
-    // const { professions, isLoading: profLoading } = useProfessions();
-    const professions = useSelector(getProfessions());
-    const profLoading = useSelector(getProfessionsLoadingStatus());
-    // const { qualities, isLoading: qualLoading } = useQualities();
-
+    const dispatch = useDispatch();
     const qualities = useSelector(getQualities());
     const qualLoading = useSelector(getQualitiesLoadingStatus());
+    const qualitiesList = getQualitiesList(qualities);
+
+    const professions = useSelector(getProfessions());
+    const profLoading = useSelector(getProfessionsLoadingStatus());
+    const professionsList = getProfessionsList(professions);
+
+    const [errors, setErrors] = useState({});
+    const history = useHistory();
+
+    function getQualitiesList(qual) {
+        return Array.isArray(qual)
+            ? qual.map(({ name, _id, color }) => ({
+                  label: name,
+                  value: _id,
+                  color
+              }))
+            : Object.values(qual).map(({ name, _id, color }) => ({
+                  label: name,
+                  value: _id,
+                  color
+              }));
+    }
+
+    function getProfessionsList(prof) {
+        return Array.isArray(prof)
+            ? prof.map(({ name, _id }) => ({
+                  label: name,
+                  value: _id
+              }))
+            : Object.values(prof).map(({ name, _id }) => ({
+                  label: name,
+                  value: _id
+              }));
+    }
 
     function getQualitiesListByIds(id) {
         const qualitiesArray = [];
@@ -59,6 +82,12 @@ const EditUserPage = () => {
             value: q._id
         }));
     }
+
+    const validate = () => {
+        const errors = validator(data, validatorConfig);
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -82,32 +111,6 @@ const EditUserPage = () => {
 
     function handleGoBack() {
         history.goBack();
-    }
-
-    function getProfessionsList(prof) {
-        return Array.isArray(prof)
-            ? prof.map(({ name, _id }) => ({
-                  label: name,
-                  value: _id
-              }))
-            : Object.values(prof).map(({ name, _id }) => ({
-                  label: name,
-                  value: _id
-              }));
-    }
-
-    function getQualitiesList(qual) {
-        return Array.isArray(qual)
-            ? qual.map(({ name, _id, color }) => ({
-                  label: name,
-                  value: _id,
-                  color
-              }))
-            : Object.values(qual).map(({ name, _id, color }) => ({
-                  label: name,
-                  value: _id,
-                  color
-              }));
     }
 
     const validatorConfig = {
@@ -136,12 +139,6 @@ const EditUserPage = () => {
     };
 
     const isValid = Object.keys(errors).length === 0;
-
-    function validate() {
-        const errors = validator(data, validatorConfig);
-        setErrors(errors);
-        return Object.keys(errors).length === 0;
-    }
 
     useEffect(() => {
         if (!profLoading && !qualLoading && currentUser && !data) {
@@ -199,9 +196,7 @@ const EditUserPage = () => {
                                         value={data.profession}
                                         onChange={handleChangeForm}
                                         defaultOption="Выберите..."
-                                        options={getProfessionsList(
-                                            professions
-                                        )}
+                                        options={professionsList}
                                         error={errors.profession}
                                         id="profession"
                                         name="profession"
@@ -221,7 +216,7 @@ const EditUserPage = () => {
                                 </div>
                                 <div className="mb-4">
                                     <MultiSelectField
-                                        options={getQualitiesList(qualities)}
+                                        options={qualitiesList}
                                         onChange={handleChangeForm}
                                         name="qualities"
                                         label="Выберете Ваше качество"

@@ -7,8 +7,8 @@ router.patch("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
     // todo: userId === current user id
-    // console.log(req.user);
     if (userId === req.user._id) {
+      // console.log("body", req.body);
       const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
       });
@@ -28,6 +28,22 @@ router.get("/", auth, async (req, res) => {
     const list = await User.find();
 
     res.status(200).send(list);
+  } catch (error) {
+    res.status(500).json({
+      massage: "На сервере произошла ошибка. Попробуйте позже",
+    });
+  }
+});
+
+router.patch("/", auth, async (req, res) => {
+  try {
+    console.log("body", req.body);
+    const id = await req.body._id;
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    res.status(200).send(updatedUser);
   } catch (error) {
     res.status(500).json({
       massage: "На сервере произошла ошибка. Попробуйте позже",

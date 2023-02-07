@@ -1,0 +1,4 @@
+{
+    "API_BASE_URL": "https://fast-company-fdb-default-rtdb.europe-west1.firebasedatabase.app/",
+    "isFireBase": true
+}

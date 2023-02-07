@@ -3,7 +3,6 @@ import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
 import userService from "../services/user.service";
 import { generateAuthError } from "../utility/generateAuthError";
-import getRandomInt from "../utility/getRandomInt";
 import history from "../utility/history";
 
 const initialState = localStorageService.getAccessToken()
@@ -44,14 +43,8 @@ const usersSlice = createSlice({
             state.auth = action.payload;
             state.isLoggedIn = true;
         },
-        authRequestFail: (state, action) => {
+        authRequestFiled: (state, action) => {
             state.error = action.payload;
-        },
-        userCreated: (state, action) => {
-            if (!Array.isArray(state.entities)) {
-                state.entities = [];
-            }
-            state.entities.push(action.payload);
         },
         userLoggedOut: (state) => {
             state.entities = null;
@@ -78,15 +71,12 @@ const {
     usersReceived,
     usersRequestedFiled,
     authRequestSuccess,
-    authRequestFail,
-    userCreated,
+    authRequestFiled,
     userLoggedOut,
     updateUserSuccess
 } = actions;
 
 const authRequested = createAction("users/authRequested");
-const userCreateRequested = createAction("users/userCreateRequested");
-const userCreateFail = createAction("users/userCreateFail");
 const userUpdateFail = createAction("users/userUpdateFail");
 const userUpdateRequest = createAction("users/userUpdateRequest");
 
@@ -97,20 +87,21 @@ export const logIn =
         dispatch(authRequested());
         try {
             const data = await authService.logIn({ email, password });
+            localStorageService.setTokens(data);
             dispatch(
                 authRequestSuccess({
-                    userId: data.localId
+                    userId: data.userId
                 })
             );
-            localStorageService.setTokens(data);
+
             history.push(redirect);
         } catch (error) {
             const { code, message } = error.response.data.error;
             if (code === 400) {
                 const errorMessage = generateAuthError(message);
-                dispatch(authRequestFail(errorMessage));
+                dispatch(authRequestFiled(errorMessage));
             } else {
-                dispatch(authRequestFail(error.message));
+                dispatch(authRequestFiled(error.message));
             }
         }
     };
@@ -121,49 +112,21 @@ export const logOut = () => (dispatch) => {
     history.push("/");
 };
 
-export const signUp =
-    ({ email, password, ...rest }) =>
-    async (dispatch) => {
-        dispatch(authRequested());
-        try {
-            const data = await authService.register({ email, password });
-            localStorageService.setTokens(data);
-            dispatch(
-                authRequestSuccess({
-                    userId: data.localId
-                })
-            );
-            dispatch(
-                createUser({
-                    _id: data.localId,
-                    email,
-                    rate: getRandomInt(1, 5),
-                    completedMeetings: getRandomInt(0, 200),
-                    image: `https://avatars.dicebear.com/api/avataaars/${(
-                        Math.random() + 1
-                    )
-                        .toString(36)
-                        .substring(7)}.svg`,
-                    ...rest
-                })
-            );
-        } catch (error) {
-            dispatch(authRequestFail(error.message));
-        }
-    };
-
-function createUser(payload) {
-    return async function (dispatch) {
-        dispatch(userCreateRequested());
-        try {
-            const { content } = await userService.create(payload);
-            dispatch(userCreated(content));
-            history.push("/users");
-        } catch (error) {
-            dispatch(userCreateFail(error.message));
-        }
-    };
-}
+export const signUp = (payload) => async (dispatch) => {
+    dispatch(authRequested());
+    try {
+        const data = await authService.register(payload);
+        localStorageService.setTokens(data);
+        dispatch(
+            authRequestSuccess({
+                userId: data.userId
+            })
+        );
+        history.push("/users");
+    } catch (error) {
+        dispatch(authRequestFiled(error.message));
+    }
+};
 
 export const loadUsersList = () => async (dispatch) => {
     dispatch(usersRequested());
@@ -187,6 +150,16 @@ export const updateUserData = (payload) => async (dispatch) => {
         const { content } = await userService.updateUser(payload);
         dispatch(updateUserSuccess(content));
         history.push(`/users/${content._id}`);
+    } catch (error) {
+        dispatch(userUpdateFail(error.message));
+    }
+};
+
+export const updateUserDataBookmark = (payload) => async (dispatch) => {
+    dispatch(userUpdateRequest());
+    try {
+        const { content } = await userService.updateUserBookmark(payload);
+        dispatch(updateUserSuccess(content));
     } catch (error) {
         dispatch(userUpdateFail(error.message));
     }

@@ -13,14 +13,14 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
         onChange({ name, value });
     };
     const animatedComponents = makeAnimated();
-
+    // console.log(options);
     const colorBootstrap = {
-        "67rdca3eeb7f6fgeed471198": "#0d6efd",
-        "67rdca3eeb7f6fgeed471100": "#6c757d",
-        "67rdca3eeb7f6fgeed4711012": "#198754",
-        "67rdca3eeb7f6fgeed471101": "#dc3545",
-        "67rdca3eeb7f6fgeed471102": "#0dcaf0",
-        "67rdca3eeb7f6fgeed471103": "#212529"
+        Нудила: "#0d6efd",
+        Странный: "#6c757d",
+        Тролль: "#198754",
+        Алкоголик: "#dc3545",
+        Красавчик: "#0dcaf0",
+        Неуверенный: "#212529"
     };
 
     const colorStyles = {
@@ -39,10 +39,10 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
                 marginTop: "5px",
                 marginBottom: "5px",
                 paddingLeft: "15px",
-                backgroundColor: `${colorBootstrap[data.value]}d9`,
+                backgroundColor: `${colorBootstrap[data.label]}d9`,
                 ":hover": {
                     color: "#fff",
-                    backgroundColor: `${colorBootstrap[data.value]}`
+                    backgroundColor: `${colorBootstrap[data.label]}`
                 }
             };
         },
@@ -50,7 +50,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             // console.log("multiValue", data);
             return {
                 ...styles,
-                backgroundColor: `${colorBootstrap[data.value]}d9`,
+                backgroundColor: `${colorBootstrap[data.label]}d9`,
                 borderRadius: "5px"
             };
         },
@@ -63,7 +63,7 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
             color: "#fff",
             ":hover": {
                 color: "#fff",
-                backgroundColor: `${colorBootstrap[data.value]}`,
+                backgroundColor: `${colorBootstrap[data.label]}`,
                 borderRadius: "5px"
             }
         })
